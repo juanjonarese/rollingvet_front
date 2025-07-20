@@ -15,8 +15,6 @@ const LoginScreen = (props) => {
   const {
     register,
     handleSubmit,
-    reset,
-    setFocus,
     formState: { errors },
   } = useForm();
 
@@ -65,7 +63,7 @@ const LoginScreen = (props) => {
                   type="email"
                   className="form-control form-control-lg ps-4"
                   {...register("emailUsuario", { required: true })}
-                  placeholder="nombre@ejemplo.com"
+                  placeholder="mail@mail.com"
                 />
                 {errors.emailUsuario && (
                   <p role="alert" className="text-danger">
@@ -101,8 +99,8 @@ const LoginScreen = (props) => {
                 <span className="text-muted">¿No tenés cuenta? </span>
                 <span
                   onClick={() => {
-                    handleClose(); // Cerrás el modal
-                    navigate("/signup"); // Redirigís a la pantalla de registro
+                    handleClose();
+                    navigate("/signup");
                   }}
                   className="text-decoration-none fw-bold enlace"
                   style={{ cursor: "pointer" }}

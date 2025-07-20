@@ -53,7 +53,7 @@ const RegisterScreen = () => {
                   type="email"
                   className="form-control form-control-lg ps-4"
                   {...register("emailUsuario")}
-                  placeholder="nombre@ejemplo.com"
+                  placeholder="mail@mail.com"
                 />
                 {errors.correo && (
                   <p className="text-danger">{errors.correo.message}</p>
