@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import HomeScreen from "../pages/HomeScreen";
+import RegisterScreen from "../pages/RegisterScreen";
 // import AboutScreen from "../pages/AboutScreen";
 // import Planes from "../pages/Planes";
 // import NotFound from "../pages/NotFound";
@@ -9,6 +10,7 @@ const PrincipalRoutes = () => {
     <>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
+        <Route path="/signup" element={<RegisterScreen />} />
         {/* <Route path="/about" element={<AboutScreen />} />
         <Route path="/planes" element={<Planes />} />
         <Route path="*" element={<NotFound />} /> */}

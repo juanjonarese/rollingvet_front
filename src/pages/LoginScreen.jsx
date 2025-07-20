@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 import { loginUsuario } from "../helpers/ApiUsers";
 import "../css/login.css";
 
-const LoginScreen = () => {
+const LoginScreen = (props) => {
+  const { handleClose } = props;
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
 
@@ -98,9 +99,16 @@ const LoginScreen = () => {
 
               <div className="text-center mt-4">
                 <span className="text-muted">¿No tenés cuenta? </span>
-                <Link className="text-decoration-none fw-bold enlace" to="*">
+                <span
+                  onClick={() => {
+                    handleClose(); // Cerrás el modal
+                    navigate("/signup"); // Redirigís a la pantalla de registro
+                  }}
+                  className="text-decoration-none fw-bold enlace"
+                  style={{ cursor: "pointer" }}
+                >
                   Registrate
-                </Link>
+                </span>
               </div>
             </form>
           </div>
