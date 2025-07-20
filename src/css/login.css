@@ -1,0 +1,13 @@
+#boton-login {
+    background-color: #DC2858;
+&:hover {
+    background-color: #F87296;
+}
+}
+
+.enlace {
+    color: #DC2858;
+&:hover {
+    color: #F87296;
+}
+}
