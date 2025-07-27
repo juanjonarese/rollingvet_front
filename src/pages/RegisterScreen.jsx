@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { registrarUsuario } from "../helpers/ApiUsers";
+import clientAxios from "../helpers/clientAxios";
 import "../css/register.css";
 
 const RegisterScreen = () => {
   const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -15,48 +17,89 @@ const RegisterScreen = () => {
     formState: { errors },
   } = useForm();
 
-  const registrarse = async (datos) => {
+  const crearUsuario = async (datos) => {
+    console.log(datos);
+
     try {
-      const respuesta = await registrarUsuario(datos);
-      if (respuesta.status === 201)
+      const respuesta = await clientAxios.post("/usuarios", datos);
+
+      if (respuesta.status === 201 || respuesta.status === 200) {
         MySwal.fire({
-          title: "Usuario creado",
-          text: data.message || "Correo o contraseña",
+          title: "Registro exitoso",
+          text: "Ya puedes iniciar sesión",
+          icon: "success",
+        });
+        navigate("/login");
+      } else {
+        MySwal.fire({
+          title: "Error",
+          text: "No se pudo crear el usuario",
           icon: "error",
         });
-      navigate();
-    } catch (error) {}
-
-    // Acá iría la lógica para registrar el usuario, por ahora solo muestra un mensaje
-    MySwal.fire({
-      title: "Registro exitoso",
-      text: "Ya puedes iniciar sesión",
-      icon: "success",
-    });
-    console.log("Datos del formulario:", datos);
+      }
+    } catch (error) {
+      MySwal.fire({
+        title: "Error",
+        text:
+          error.response?.data?.message ||
+          "Hubo un error al registrar el usuario",
+        icon: "error",
+      });
+    }
   };
 
   return (
-    <div className="register-container container my-3">
-      <div className="row justify-content-center py-3">
+    <div className="register-container container ">
+      <div className="row justify-content-center py-1">
         <div className="col-md-8 col-lg-6">
-          <div className="login-container p-5">
-            <div className="text-center mb-5">
-              <h2 className="fw-bold mb-3">Registrate</h2>
+          <div className="login-container p-3">
+            <div className="text-center mb-3">
+              <h2 className="fw-bold mb-1">Registrate</h2>
             </div>
 
-            <form onSubmit={handleSubmit(registrarse)}>
-              {/* Correo */}
+            <form onSubmit={handleSubmit(crearUsuario)}>
+              <div className="mb-4 position-relative">
+                <label className="form-label">Nombre y Apellido</label>
+                <input
+                  type="text"
+                  className="form-control form-control-lg ps-4"
+                  {...register("nombreUsuario", { required: true })}
+                  placeholder="Juan Perez"
+                />
+                {errors.nombreUsuario && (
+                  <p role="alert" className="text-danger">
+                    El campo es obligatorio
+                  </p>
+                )}
+              </div>
+
+              <div className="mb-4 position-relative">
+                <label className="form-label">Telefono</label>
+                <input
+                  type="number"
+                  className="form-control form-control-lg ps-4"
+                  {...register("telefonoUsuario", { required: true })}
+                  placeholder="381•••••••"
+                />
+                {errors.telefonoUsuario && (
+                  <p role="alert" className="text-danger">
+                    El campo es obligatorio
+                  </p>
+                )}
+              </div>
+
               <div className="mb-4 position-relative">
                 <label className="form-label">Correo electrónico</label>
                 <input
                   type="email"
                   className="form-control form-control-lg ps-4"
-                  {...register("emailUsuario")}
-                  placeholder="mail@mail.com"
+                  {...register("emailUsuario", { required: true })}
+                  placeholder="example@mail.com"
                 />
-                {errors.correo && (
-                  <p className="text-danger">{errors.correo.message}</p>
+                {errors.emailUsuario && (
+                  <p role="alert" className="text-danger">
+                    El campo es obligatorio
+                  </p>
                 )}
               </div>
 
@@ -66,11 +109,13 @@ const RegisterScreen = () => {
                 <input
                   type="password"
                   className="form-control form-control-lg ps-4"
-                  {...register("contraseniaUsuario")}
+                  {...register("contraseniaUsuario", { required: true })}
                   placeholder="••••••••"
                 />
-                {errors.password && (
-                  <p className="text-danger">{errors.password.message}</p>
+                {errors.contraseniaUsuario && (
+                  <p role="alert" className="text-danger">
+                    El campo es obligatorio
+                  </p>
                 )}
               </div>
 
@@ -81,15 +126,17 @@ const RegisterScreen = () => {
                   type="password"
                   className="form-control form-control-lg ps-4"
                   {...register("rePassword", {
-                    required: "Este campo es obligatorio",
+                    required: true,
                     validate: (value) =>
-                      value === watch("password") ||
+                      value === watch("contraseniaUsuario") ||
                       "Las contraseñas no coinciden",
                   })}
                   placeholder="••••••••"
                 />
                 {errors.rePassword && (
-                  <p className="text-danger">{errors.rePassword.message}</p>
+                  <p role="alert" className="text-danger">
+                    El campo es obligatorio
+                  </p>
                 )}
               </div>
 

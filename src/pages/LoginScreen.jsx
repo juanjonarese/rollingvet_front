@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Link } from "react-router-dom";
-import { loginUsuario } from "../helpers/ApiUsers";
+import clientAxios from "../helpers/clientAxios";
+
 import "../css/login.css";
 
 const LoginScreen = (props) => {
@@ -23,17 +24,22 @@ const LoginScreen = (props) => {
   }, []);
 
   const logIn = async (datos) => {
+    console.log(datos);
+
+    const respuesta = await clientAxios.post("/usuarios/login", datos);
+    console.log(respuesta);
+
     try {
-      const respuesta = await loginUsuario(datos);
-      console.log(respuesta);
-      if (respuesta.token) {
-        // const { username, email, rol } = data.usuario;
+      // const { username, email, rol,token } = data.usuario;
+
+      if (respuesta.data.token) {
         localStorage.setItem("user", JSON.stringify(respuesta.token));
+        handleClose();
         navigate("/");
       } else {
         MySwal.fire({
           title: "OOPS!",
-          text: data.message || "Correo o contraseña incorrectos",
+          text: respuesta.data.message || "Correo o contraseña incorrectos",
           icon: "error",
         });
       }
