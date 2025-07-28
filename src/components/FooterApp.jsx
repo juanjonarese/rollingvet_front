@@ -6,7 +6,7 @@ const FooterApp = () => {
           <div className="col-12 text-center">
             <h3>Veterinaria Rolling</h3>
 
-            <p>Veterianria al cuidado de tus mascotas</p>
+            <p>Veterinaria al cuidado de tus mascotas</p>
 
             <p>v1.0.0</p>
           </div>
