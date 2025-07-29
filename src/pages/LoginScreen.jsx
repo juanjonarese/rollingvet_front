@@ -24,29 +24,38 @@ const LoginScreen = (props) => {
   }, []);
 
   const logIn = async (datos) => {
-    console.log(datos);
-
-    const respuesta = await clientAxios.post("/usuarios/login", datos);
-    console.log(respuesta);
-
     try {
-      // const { username, email, rol,token } = data.usuario;
+      console.log("Datos enviados:", datos);
 
-      if (respuesta.data.token) {
-        localStorage.setItem("user", JSON.stringify(respuesta.token));
+      // 1. Enviás los datos del formulario
+      const respuesta = await clientAxios.post("/usuarios/login", datos);
+
+      console.log("Respuesta del backend:", respuesta.data);
+
+      const { rolUsuario, token } = respuesta.data;
+
+      // 2. Validás si hay token
+      if (token) {
+        // 3. Guardás usuario en localStorage
+        localStorage.setItem("user", JSON.stringify({ rolUsuario, token }));
+
+        // 4. Cerrás modal y navegás
         handleClose();
         navigate("/");
       } else {
         MySwal.fire({
           title: "OOPS!",
-          text: respuesta.data.message || "Correo o contraseña incorrectos",
+          text: "Correo o contraseña incorrectos",
           icon: "error",
         });
       }
     } catch (error) {
+      console.error("Error al iniciar sesión:", error);
       MySwal.fire({
         title: "Error",
-        text: "No se pudo conectar con el servidor",
+        text:
+          error.response?.data?.message ||
+          "No se pudo conectar con el servidor",
         icon: "error",
       });
     }
@@ -54,7 +63,7 @@ const LoginScreen = (props) => {
 
   return (
     <div className="container">
-      <div className="row justify-content-center">
+      <div className="row justify-content-center my-4">
         <div className="col-md-8 col-lg-8">
           <div className="login-container">
             <div className="text-center mb-5">
