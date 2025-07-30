@@ -1,4 +1,4 @@
-import react, { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
 const Formulario = () => {
@@ -8,9 +8,9 @@ const Formulario = () => {
     const sendEmail = (e) => {
         e.preventDefault();
 
-        const SERVICE_ID = 'service_id'; //falta agregar el service id de juan"
-        const TEMPLATE_ID = 'template_id'; //falta agregar el template id de juan
-        const PUBLIC_KEY = 'public_key'; //falta agregar el public key de juan
+        const SERVICE_ID = 'service_yz3ja5l';
+        const TEMPLATE_ID = 'template_p79e0d1';
+        const PUBLIC_KEY = 'BP05L64_VqRHfRJBb';
 
         emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY).then((result) => {
             console.log(resultado.text);
