@@ -4,6 +4,7 @@ import RegisterScreen from "../pages/RegisterScreen";
 import RecoveryPassScreen from "../pages/RecoveryPassScreen";
 import LoginScreen from "../pages/LoginScreen";
 import ProductsScreen from "../pages/ProductsScreen";
+import OneProductScreen from "../pages/OneProductScreen"; // Importa OneProductScreen
 // import AboutScreen from "../pages/AboutScreen";
 // import Planes from "../pages/Planes";
 // import NotFound from "../pages/NotFound";
@@ -14,6 +15,8 @@ const PrincipalRoutes = () => {
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/products" element={<ProductsScreen />} />
+        <Route path="/product/:id" element={<OneProductScreen />} />{" "}
+        {/* Nueva ruta agregada */}
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/signup" element={<RegisterScreen />} />
         <Route path="/recovery" element={<RecoveryPassScreen />} />
