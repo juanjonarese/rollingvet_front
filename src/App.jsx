@@ -1,16 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavbarApp from "./components/NavbarApp";
-import FooterApp from "./components/FooterApp";
-import PrincipalRoutes from "./routes/PrincipalRoutes";
+import React from "react";
 
 const App = () => {
-  return (
-    <BrowserRouter>
-      <NavbarApp />
-      <PrincipalRoutes />
-      <FooterApp />
-    </BrowserRouter>
-  );
+  return <h1>Proyecto Final</h1>;
 };
 
 export default App;
