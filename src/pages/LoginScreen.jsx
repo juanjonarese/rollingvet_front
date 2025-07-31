@@ -42,20 +42,11 @@ const LoginScreen = (props) => {
         // 4. Cerrás modal y navegás
         handleClose();
         navigate("/");
-      } else {
-        MySwal.fire({
-          title: "OOPS!",
-          text: "Correo o contraseña incorrectos",
-          icon: "error",
-        });
       }
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
       MySwal.fire({
         title: "Error",
-        text:
-          error.response?.data?.message ||
-          "No se pudo conectar con el servidor",
+        text: error.response.data.msg || "Ocurrió un error al iniciar sesión",
         icon: "error",
       });
     }

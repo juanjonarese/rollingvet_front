@@ -22,10 +22,10 @@ const RegisterScreen = () => {
 
     try {
       const respuesta = await clientAxios.post("/usuarios", datos);
-
+      console.log(respuesta);
       if (respuesta.status === 201 || respuesta.status === 200) {
         MySwal.fire({
-          title: "Registro exitoso",
+          title: respuesta.data.msg,
           text: "Ya puedes iniciar sesión",
           icon: "success",
         });
@@ -42,7 +42,7 @@ const RegisterScreen = () => {
         title: "Error",
         text:
           error.response?.data?.message ||
-          "Hubo un error al registrar el usuario",
+          "Hubo un error al registrar el usuario, usuario ya existe con ese mail",
         icon: "error",
       });
     }
@@ -127,15 +127,13 @@ const RegisterScreen = () => {
                   className="form-control form-control-lg ps-4"
                   {...register("rePassword", {
                     required: true,
-                    validate: (value) =>
-                      value === watch("contraseniaUsuario") ||
-                      "Las contraseñas no coinciden",
+                    validate: (value) => value === watch("contraseniaUsuario"),
                   })}
                   placeholder="••••••••"
                 />
                 {errors.rePassword && (
                   <p role="alert" className="text-danger">
-                    El campo es obligatorio
+                    Las contraseñas no son iguales
                   </p>
                 )}
               </div>
