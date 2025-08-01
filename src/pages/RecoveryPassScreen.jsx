@@ -15,37 +15,34 @@ const RecoveryPassScreen = () => {
     formState: { errors },
   } = useForm();
 
-  const mailRecovery = async () => {
-    try {
-      //   const respuesta = await axios.post("/usuarios");
-      console.log(respuesta);
-      if (respuesta.status === 201 || respuesta.status === 200) {
-        MySwal.fire({
-          title: "Registro exitoso",
-          text: "Ya puedes iniciar sesión",
-          icon: "success",
-        });
-        navigate("/login"); // me lleva al login despues de registrarme
-      } else {
-        MySwal.fire({
-          title: "Error",
-          text: "No se pudo crear el usuario",
-          icon: "error",
-        });
-      }
-    } catch (error) {
-      MySwal.fire({
-        title: "Error",
-        text:
-          error.response?.data?.message ||
-          "Hubo un error al registrar el usuario",
-        icon: "error",
-      });
-    }
-  };
-  useEffect(() => {
-    crearUsuario();
-  }, []);
+  // const mailRecovery = async () => {
+  //   try {
+  //     //   const respuesta = await axios.post("/usuarios");
+  //     console.log(respuesta);
+  //     if (respuesta.status === 201 || respuesta.status === 200) {
+  //       MySwal.fire({
+  //         title: "Registro exitoso",
+  //         text: "Ya puedes iniciar sesión",
+  //         icon: "success",
+  //       });
+  //       navigate("/login"); // me lleva al login despues de registrarme
+  //     } else {
+  //       MySwal.fire({
+  //         title: "Error",
+  //         text: "No se pudo crear el usuario",
+  //         icon: "error",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     MySwal.fire({
+  //       title: "Error",
+  //       text:
+  //         error.response?.data?.message ||
+  //         "Hubo un error al registrar el usuario",
+  //       icon: "error",
+  //     });
+  //   }
+  // };
 
   return (
     <div className="register-container container my-3">
@@ -56,7 +53,7 @@ const RecoveryPassScreen = () => {
               <h2 className="fw-bold mb-3">Recuperar Contraseña</h2>
             </div>
 
-            <form onSubmit={handleSubmit(crearUsuario)}>
+            <form onSubmit={handleSubmit()}>
               {/* Correo */}
               <div className="mb-4 position-relative">
                 <label className="form-label">Correo electrónico</label>

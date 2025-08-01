@@ -44,7 +44,21 @@ const HomeScreen = () => {
       <CarouselApp carouselImg={carouselImg} id={"carousel1"} />
 
       <CardApiClima />
-
+      {/* <div className="row">
+        <div className="col p-2 text-center">
+          <h1>Rolling Vet</h1>
+        </div>
+        <div className="col-12 ">
+          <p>
+            En RollingVet nos dedicamos con pasión al cuidado integral de tu
+            mascota. Ofrecemos atención veterinaria de calidad, tratamientos
+            personalizados y asesoramiento profesional en cada etapa de su vida.
+            Contamos con un sistema de turnos online para que puedas reservar tu
+            cita de forma rápida y cómoda desde donde estés. Tu mascota es parte
+            de tu familia, y en RollingVet la cuidamos como tal.
+          </p>
+        </div>
+      </div> */}
       <div
         style={{ display: "flex", justifyContent: "space-around", padding: 20 }}
       >
