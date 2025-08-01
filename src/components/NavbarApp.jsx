@@ -78,6 +78,16 @@ const NavBarApp = () => {
                   Sobre Nosotros
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
+                  }
+                  to="/products"
+                >
+                  Productos
+                </NavLink>
+              </li>
 
               <li className="nav-item">
                 <NavLink
