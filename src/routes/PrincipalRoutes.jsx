@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomeScreen from "../pages/HomeScreen";
 import RegisterScreen from "../pages/RegisterScreen";
-import RecoveryPassScreen from "../pages/RecoveryPassScreen";
+import RecoveryPassMailScreen from "../pages/RecoveryPassScreen";
 import LoginScreen from "../pages/LoginScreen";
 import ProductsScreen from "../pages/ProductsScreen";
 import OneProductScreen from "../pages/OneProductScreen";
@@ -18,7 +18,7 @@ const PrincipalRoutes = () => {
         <Route path="/product/:id" element={<OneProductScreen />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/signup" element={<RegisterScreen />} />
-        <Route path="/recovery" element={<RecoveryPassScreen />} />
+        <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
         {/* <Route path="/about" element={<AboutScreen />} />
         <Route path="/planes" element={<Planes />} />
         <Route path="*" element={<NotFound />} /> */}
