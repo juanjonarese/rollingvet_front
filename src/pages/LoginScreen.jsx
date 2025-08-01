@@ -114,6 +114,19 @@ const LoginScreen = (props) => {
                   Registrate
                 </span>
               </div>
+              <div className="text-center mt-4">
+                <span className="text-muted">¿olvidaste tu contraseña? </span>
+                <span
+                  onClick={() => {
+                    handleClose();
+                    navigate("/recovery");
+                  }}
+                  className="text-decoration-none fw-bold enlace"
+                  style={{ cursor: "pointer" }}
+                >
+                  Recuperar
+                </span>
+              </div>
             </form>
           </div>
         </div>
