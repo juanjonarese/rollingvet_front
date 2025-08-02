@@ -5,7 +5,7 @@ function Card({ titulo, descripcion }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/formulario');
+    navigate('/FormularioPlanes');
   };
 
   return (
