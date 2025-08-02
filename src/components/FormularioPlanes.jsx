@@ -9,9 +9,9 @@ const FormularioPlanes = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    const SERVICE_ID = 'service_yz3ja5l';
-    const TEMPLATE_ID = 'template_p79e0d1';
-    const PUBLIC_KEY = 'BP05L64_VqRHfRJBb';
+    const SERVICE_ID = 'service_fn3n5ou';
+    const TEMPLATE_ID = 'template_wopyz2t';
+    const PUBLIC_KEY = 'ctSUKIcPPGKT-3pBh';
 
     if (!form.current) return;
 
