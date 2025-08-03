@@ -8,12 +8,7 @@ import clientAxios from "../helpers/clientAxios";
 const RecoveryPassMailScreen = () => {
   const MySwal = withReactContent(Swal);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   // const [emailUsuario, setEmailUsuario] = useState("");
 
   const mailRecovery = async (data) => {
