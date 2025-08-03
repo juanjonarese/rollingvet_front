@@ -24,19 +24,20 @@ const CardApiClima = () => {
 
   return (
     <div
-      className="card text-center"
-      style={{ maxWidth: "200px", margin: "0 auto" }}
-    >
-      <div className="card-body">
-        <img
-          src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-          alt="clima"
-          className="img-fluid"
-        />
-        <h3 className="card-title">{Math.round(weather.main.temp)}°C</h3>
-        <p className="card-text">{weather.name}</p>
-      </div>
-    </div>
+  className="card text-center shadow-sm"
+  style={{ width: "100%", maxWidth: "250px", padding: "10px" }}
+>
+  <div className="card-body p-2">
+    <img
+      src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+      alt="clima"
+      style={{ width: "50px", height: "50px" }}
+    />
+    <h5 className="card-title mb-1">{Math.round(weather.main.temp)}°C</h5>
+    <p className="card-text small mb-0">{weather.name}</p>
+  </div>
+</div>
+
   );
 };
 

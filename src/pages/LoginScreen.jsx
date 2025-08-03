@@ -6,7 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 import { Link } from "react-router-dom";
 import clientAxios from "../helpers/clientAxios";
 
-import "../css/login.css";
+
 
 const LoginScreen = (props) => {
   const { handleClose } = props;

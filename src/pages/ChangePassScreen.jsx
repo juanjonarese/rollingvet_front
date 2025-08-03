@@ -47,7 +47,7 @@ const ChangePassScreen = () => {
               <h2 className="fw-bold mb-3">Cambiar Contraseña</h2>
             </div>
 
-            <form onSubmit={handleSubmit(handlePass)}>
+            <form onSubmit={handleSubmit(changePass)}>
               {/* Correo */}
               <div className="mb-4 position-relative">
                 <label className="form-label">Nueva Contraseña</label>

@@ -1,0 +1,40 @@
+/* nanvbar */
+.navabar-color{
+    background-color: #FF8653;
+}
+
+
+/* carrusel */
+.carouselApp {
+  height: 500px;
+  & .carousel-inner {
+    height: 100%;
+    & .carousel-item img {
+      height: 500px;
+      object-fit: cover;
+    }
+  }
+}
+
+/* login */
+
+#boton-login {
+   background-color: rgb(26, 199, 138);
+    &:hover {
+   background-color:  rgb(26, 199, 138);
+}}
+
+
+.enlace {
+    color: #FF8653;
+&:hover {
+    color: #f78e61;
+}
+}
+/* // boton del navbar */
+.btn-login{
+
+    background-color:  rgb(26, 199, 138);
+    &:hover {
+   background-color:   rgb(26, 199, 138);
+}}

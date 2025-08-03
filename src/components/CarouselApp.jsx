@@ -1,9 +1,9 @@
-import "../css/carousel.css";
+
 // import img1 from "/public/1.jpg";
 const CarouselApp = (props) => {
   const { carouselImg, id } = props;
   return (
-    <div className="my-2">
+    <div className="my-0">
       <div id={id} className="carousel slide carouselApp">
         <div className="carousel-inner">
           {carouselImg.map((item, index) => (

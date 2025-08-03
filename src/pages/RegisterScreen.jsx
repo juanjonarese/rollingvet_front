@@ -49,7 +49,7 @@ const RegisterScreen = () => {
   };
 
   return (
-    <div className="register-container container ">
+    <div className="register-container container  my-3">
       <div className="row justify-content-center py-1">
         <div className="col-md-8 col-lg-6">
           <div className="login-container p-3">

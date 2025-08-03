@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import LoginModalApp from "./LoginModalApp";
 import logo from "../assets/logo.webp";
-import "../css/navbar.css";
+
 
 const NavBarApp = () => {
   const [user, setUser] = useState(null);
@@ -121,7 +121,7 @@ const NavBarApp = () => {
                   </button>
                 ) : (
                   <button
-                    className="btn btn-login"
+                    className="btn  btn-danger"
                     onClick={() => setShow(true)}
                   >
                     <FontAwesomeIcon icon={faUser} /> Login
@@ -129,6 +129,7 @@ const NavBarApp = () => {
                 )}
               </li>
             </ul>
+          
           </div>
         </div>
       </nav>
