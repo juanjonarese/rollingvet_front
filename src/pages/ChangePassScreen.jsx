@@ -1,94 +1,72 @@
-import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-import clientAxios from "../helpers/clientAxios";
+import { useLocation } from "react-router-dom"; // <-- Importar esto
+import { Container } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import clientAxios from "../helpers/clientAxios"; // No uses configHeaders
 
 const ChangePassScreen = () => {
-  const MySwal = withReactContent(Swal);
+  const location = useLocation();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [nuevaContrasenia, setNuevaContrasenia] = useState("");
+  const [confirmarNuevaContrasenia, setConfirmarNuevaContrasenia] =
+    useState("");
 
-  const changePass = async (data) => {
-    const [nuevaContrasenia, setNuevaContrasenia] = useState("");
-    const [confirmarNuevaContrasenia, setConfirmarNuevaContrasenia] =
-      useState("");
+  const handleClickFormChangePass = async (ev) => {
+    ev.preventDefault();
 
-    const handlePass = async (e) => {
-      try {
-        const tokenUrl = new URLSearchParams(location.search).get("token");
+    const tokenUrl = new URLSearchParams(location.search).get("token");
 
-        if (nuevaContrasenia === confirmarNuevaContrasenia) {
-          const respuesta = await clientAxios.post(
-            `usuarios/changePass?token=${tokenUrl}`,
-            {},
-            configHeaders
-          );
-        } else {
-          alert("las contraseñas no coincide");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    if (!tokenUrl) {
+      alert("Token inválido o faltante");
+      return;
+    }
+
+    if (nuevaContrasenia !== confirmarNuevaContrasenia) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+
+    try {
+      const res = await clientAxios.post(
+        `/usuarios/changeNewPassUser?token=${tokenUrl}`,
+        { contrasenia: nuevaContrasenia }
+      );
+      console.log(res);
+      alert("Contraseña actualizada correctamente");
+    } catch (error) {
+      console.error(error);
+      alert("Error al cambiar la contraseña");
+    }
   };
 
   return (
-    <div className="register-container container my-3">
-      <div className="row justify-content-center py-3">
-        <div className="col-md-8 col-lg-6">
-          <div className="login-container p-5">
-            <div className="text-center mb-5">
-              <h2 className="fw-bold mb-3">Cambiar Contraseña</h2>
-            </div>
+    <Container className="d-flex justify-content-center py-5">
+      <Form onSubmit={handleClickFormChangePass}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Nueva Contraseña</Form.Label>
+          <Form.Control
+            type="password"
+            onChange={(ev) => setNuevaContrasenia(ev.target.value)}
+          />
+        </Form.Group>
 
-            <form onSubmit={handleSubmit(changePass)}>
-              {/* Correo */}
-              <div className="mb-4 position-relative">
-                <label className="form-label">Nueva Contraseña</label>
-                <input
-                  type="password"
-                  className="form-control form-control-lg ps-4"
-                  {...register("nuevaContrasenia", { required: true })}
-                  placeholder="••••••••"
-                />
-                {errors.contrasenia && (
-                  <p role="alert" className="text-danger">
-                    El campo es obligatorio
-                  </p>
-                )}
-              </div>
-              <div className="mb-4 position-relative">
-                <label className="form-label">Repetir Contraseña</label>
-                <input
-                  type="password"
-                  className="form-control form-control-lg ps-4"
-                  {...register("confirmarNuevaContrasenia", { required: true })}
-                  placeholder="••••••••"
-                />
-                {errors.contrasenia && (
-                  <p role="alert" className="text-danger">
-                    El campo es obligatorio
-                  </p>
-                )}
-              </div>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Repetir Contraseña</Form.Label>
+          <Form.Control
+            type="password"
+            onChange={(ev) => setConfirmarNuevaContrasenia(ev.target.value)}
+          />
+        </Form.Group>
 
-              <button
-                type="submit"
-                className="registro-btn btn btn-custom btn-lg w-100 mb-3"
-              >
-                Enviar
-              </button>
-            </form>
-          </div>
+        <div className="text-center">
+          <Button variant="primary" type="submit">
+            Enviar Datos
+          </Button>
         </div>
-      </div>
-    </div>
+      </Form>
+    </Container>
   );
 };
+
 export default ChangePassScreen;

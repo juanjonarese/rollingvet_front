@@ -6,8 +6,6 @@ import withReactContent from "sweetalert2-react-content";
 import { Link } from "react-router-dom";
 import clientAxios from "../helpers/clientAxios";
 
-
-
 const LoginScreen = (props) => {
   const { handleClose } = props;
   const MySwal = withReactContent(Swal);
