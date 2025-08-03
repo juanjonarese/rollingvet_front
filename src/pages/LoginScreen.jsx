@@ -119,7 +119,7 @@ const LoginScreen = (props) => {
                 <span
                   onClick={() => {
                     handleClose();
-                    navigate("/recovery");
+                    navigate("/recoverymail");
                   }}
                   className="text-decoration-none fw-bold enlace"
                   style={{ cursor: "pointer" }}

@@ -5,6 +5,7 @@ import RecoveryPassMailScreen from "../pages/RecoveryPassScreen";
 import LoginScreen from "../pages/LoginScreen";
 import ProductsScreen from "../pages/ProductsScreen";
 import OneProductScreen from "../pages/OneProductScreen";
+import ChangePassScreen from "../pages/ChangePassScreen";
 // import AboutScreen from "../pages/AboutScreen";
 // import Planes from "../pages/Planes";
 // import NotFound from "../pages/NotFound";
@@ -19,6 +20,7 @@ const PrincipalRoutes = () => {
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/signup" element={<RegisterScreen />} />
         <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
+        <Route path="/changepass" element={<ChangePassScreen />} />
         {/* <Route path="/about" element={<AboutScreen />} />
         <Route path="/planes" element={<Planes />} />
         <Route path="*" element={<NotFound />} /> */}
