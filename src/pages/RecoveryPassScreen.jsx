@@ -1,51 +1,46 @@
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import clientAxios from "../helpers/clientAxios";
 
-const RecoveryPassScreen = () => {
+const RecoveryPassMailScreen = () => {
   const MySwal = withReactContent(Swal);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
+  // const [emailUsuario, setEmailUsuario] = useState("");
 
-  const mailRecovery = async () => {
+  const mailRecovery = async (data) => {
     try {
-      //   const respuesta = await axios.post("/usuarios");
-      console.log(respuesta);
+      const respuesta = await clientAxios.post("/usuarios/recoveryPass", {
+        emailUsuario: data.emailUsuario,
+      });
+
       if (respuesta.status === 201 || respuesta.status === 200) {
         MySwal.fire({
-          title: "Registro exitoso",
-          text: "Ya puedes iniciar sesión",
+          title: "Correo enviado",
+          text: "Revisá tu bandeja para recuperar tu contraseña.",
           icon: "success",
         });
-        navigate("/login"); // me lleva al login despues de registrarme
       } else {
         MySwal.fire({
           title: "Error",
-          text: "No se pudo crear el usuario",
+          text: "No se pudo procesar el correo",
           icon: "error",
         });
       }
     } catch (error) {
+      console.log(error);
       MySwal.fire({
         title: "Error",
         text:
           error.response?.data?.message ||
-          "Hubo un error al registrar el usuario",
+          "Hubo un error al intentar enviar el correo",
         icon: "error",
       });
     }
   };
-  useEffect(() => {
-    crearUsuario();
-  }, []);
 
   return (
     <div className="register-container container my-3">
@@ -56,7 +51,7 @@ const RecoveryPassScreen = () => {
               <h2 className="fw-bold mb-3">Recuperar Contraseña</h2>
             </div>
 
-            <form onSubmit={handleSubmit(crearUsuario)}>
+            <form onSubmit={handleSubmit(mailRecovery)}>
               {/* Correo */}
               <div className="mb-4 position-relative">
                 <label className="form-label">Correo electrónico</label>
@@ -83,4 +78,4 @@ const RecoveryPassScreen = () => {
     </div>
   );
 };
-export default RecoveryPassScreen;
+export default RecoveryPassMailScreen;
