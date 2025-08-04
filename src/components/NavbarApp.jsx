@@ -60,9 +60,9 @@ const NavBarApp = () => {
                   className={({ isActive }) =>
                     isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
                   }
-                  to="/about"
+                  to="/aboutuspage"
                 >
-                  About
+                  Sobre Nosotros
                 </NavLink>
               </li>
               <li className="nav-item">
