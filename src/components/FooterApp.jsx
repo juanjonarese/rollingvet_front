@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const FooterApp = () => {
   return (
     <footer className="bg-dark py-5">
@@ -11,9 +13,15 @@ const FooterApp = () => {
             <p>v1.0.0</p>
           </div>
           <div className="col-12 d-flex gap-3 justify-content-center">
-            <i className="bi bi-instagram fs-3"></i>
-            <i className="bi bi-tiktok fs-3"></i>
-            <i className="bi bi-linkedin fs-3"></i>
+            <Link to="/Error404" className="text-decoration-none text-white">
+              <i className="bi bi-instagram fs-3"></i>
+            </Link>
+            <Link to="/Error404" className="text-decoration-none text-white">
+              <i className="bi bi-tiktok fs-3"></i>
+            </Link>
+            <Link to="/Error404" className="text-decoration-none text-white">
+              <i className="bi bi-linkedin fs-3"></i>
+            </Link>
           </div>
           <div className="col-12 text-center mt-3">
             <p>&copy; Todos los derechos reservados</p>

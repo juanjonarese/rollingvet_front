@@ -7,8 +7,13 @@ import ProductsScreen from "../pages/ProductsScreen";
 import OneProductScreen from "../pages/OneProductScreen";
 import ChangePassScreen from "../pages/ChangePassScreen";
 import AdminUsersScreen from "../pages/AdminUsersScreen";
+import AboutUsPage from "../pages/AboutUsPage"
+import Error404 from "../pages/error404.jsx";
+import FormularioPlanes from "../components/FormularioPlanes.jsx";
+import FooterApp from "../components/FooterApp.jsx";
 
 const PrincipalRoutes = () => {
+  return (
     <>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
@@ -19,6 +24,10 @@ const PrincipalRoutes = () => {
         <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
         <Route path="/changepass" element={<ChangePassScreen />} />
         <Route path="/adminusers" element={<AdminUsersScreen />} />
+        <Route path="/aboutuspage" element={<AboutUsPage />} />
+        <Route path="/error404" element={<Error404 />} />
+        <Route path="/formularioplanes" element={<FormularioPlanes />} />
+        <Route path="/footerapp" element={<FooterApp />} />
         {/* <Route path="/about" element={<AboutScreen />} />
         <Route path="/planes" element={<Planes />} />
         <Route path="*" element={<NotFound />} /> */}
