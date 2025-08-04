@@ -1,4 +1,8 @@
-"use client";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import clientAxios from "../helpers/clientAxios";
+
+("use client");
 
 import { useState } from "react";
 import {
@@ -38,7 +42,8 @@ const horariosDisponibles = [
   "15:30",
 ];
 
-export default function VeterinaryAppointments() {
+export default function TuerneroApp() {
+  const MySwal = withReactContent(Swal);
   const [turnos, setTurnos] = useState([]);
   const [datosFormulario, setDatosFormulario] = useState({
     detalle: "",
@@ -49,7 +54,32 @@ export default function VeterinaryAppointments() {
   });
   const [errores, setErrores] = useState({});
   const [mostrarExito, setMostrarExito] = useState(false);
+  try {
+    const respuesta = clientAxios.post("/usuarios", datos);
 
+    if (respuesta.status === 201 || respuesta.status === 200) {
+      MySwal.fire({
+        title: "Registro exitoso",
+        text: "Ya puedes iniciar sesión",
+        icon: "success",
+      });
+      navigate("/login");
+    } else {
+      MySwal.fire({
+        title: "Error",
+        text: "No se pudo crear el usuario",
+        icon: "error",
+      });
+    }
+  } catch (error) {
+    MySwal.fire({
+      title: "Error",
+      text:
+        error.response?.data?.message ||
+        "Hubo un error al registrar el usuario",
+      icon: "error",
+    });
+  }
   const manejarCambioInput = (e) => {
     const { name, value } = e.target;
     setDatosFormulario((prev) => ({
@@ -304,7 +334,7 @@ export default function VeterinaryAppointments() {
           </Card>
         </Col>
 
-        <Col lg={7}>
+        {/*  <Col lg={7}>
           <Card>
             <Card.Header className="bg-success text-white d-flex justify-content-between align-items-center">
               <h4 className="mb-0">📋 Turnos Agendados</h4>
@@ -378,7 +408,7 @@ export default function VeterinaryAppointments() {
               )}
             </Card.Body>
           </Card>
-        </Col>
+        </Col> */}
       </Row>
 
       <Row className="mt-4">
