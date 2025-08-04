@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import juanImage from '../assets/juan.jpg';
 
 const AboutUsPage = () => {
   return (
@@ -22,7 +23,7 @@ const AboutUsPage = () => {
 
         <Col xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
           <div className="grid-item-image">
-            <Image src="/assets/juan.jpg" alt="Miembro del equipo 1" fluid rounded />
+            <Image src={juanImage} alt="Miembro del equipo 1" fluid rounded />
             <p className="image-caption mt-2">Nuestro equipo de desarrollo</p>
           </div>
         </Col>
