@@ -73,7 +73,7 @@ const NavBarApp = () => {
                   className={({ isActive }) =>
                     isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
                   }
-                  to="/about"
+                  to="/aboutuspage"
                 >
                   Sobre Nosotros
                 </NavLink>

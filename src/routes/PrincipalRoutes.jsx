@@ -9,7 +9,6 @@ import ChangePassScreen from "../pages/ChangePassScreen";
 import AdminUsersScreen from "../pages/AdminUsersScreen";
 
 const PrincipalRoutes = () => {
-  return (
     <>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
