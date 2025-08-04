@@ -1,7 +1,8 @@
 import React from 'react';
 import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import juanImage from '../assets/juan.jpg';
+import juanImage from '../assets/juan.png';
+import luchoImage from '../assets/lucho.png';
 
 const AboutUsPage = () => {
   return (
@@ -31,7 +32,7 @@ const AboutUsPage = () => {
         {/* Segunda imagen */}
         <Col xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
           <div className="grid-item-image">
-            <Image src="https://placehold.co/400x300/957DAD/FFFFFF?text=Misión" alt="Nuestra misión" fluid rounded />
+            <Image src={luchoImage} alt="Nuestra misión" fluid rounded />
             <p className="image-caption mt-2">Trabajando en nuestra misión</p>
           </div>
         </Col>
