@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import LoginModalApp from "./LoginModalApp";
-import logo from "../assets/logo.webp";
-
+import logo from "../assets/rolling-logo.svg";
 
 const NavBarApp = () => {
   const [user, setUser] = useState(null);
@@ -38,7 +37,7 @@ const NavBarApp = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navabar-color">
+      <nav className="navbar navbar-expand-lg navabar-color texto-menu">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img src={logo} alt="Logo" />
@@ -102,26 +101,44 @@ const NavBarApp = () => {
 
               {/* Botón de Admin - solo se muestra si el usuario es admin */}
               {user?.rolUsuario === "admin" && (
-                <li className="nav-item">
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
-                    }
-                    to="/admin"
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
                     Administrador
-                  </NavLink>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to="/products">
+                        Productos
+                      </Link>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Pacientes
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Usuarios
+                      </a>
+                    </li>
+                  </ul>
                 </li>
               )}
 
               <li className="nav-item">
                 {user ? (
-                  <button className="btn btn-danger" onClick={handleLogout}>
+                  <button className="btn-vet" onClick={handleLogout}>
                     Cerrar sesión
                   </button>
                 ) : (
                   <button
-                    className="btn  btn-danger"
+                    className="btn  btn-login"
                     onClick={() => setShow(true)}
                   >
                     <FontAwesomeIcon icon={faUser} /> Login
@@ -129,7 +146,6 @@ const NavBarApp = () => {
                 )}
               </li>
             </ul>
-          
           </div>
         </div>
       </nav>

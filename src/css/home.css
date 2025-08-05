@@ -1,8 +1,11 @@
 /* nanvbar */
 .navabar-color{
-    background-color: #FF8653;
+    background-color: #eee;
 }
 
+.texto-menu{
+  color: rgb(242, 245, 244)!important;
+}
 
 /* carrusel */
 .carouselApp {
@@ -18,7 +21,7 @@
 
 /* login */
 
-#boton-login {
+#boton-vet {
    background-color: rgb(26, 199, 138);
     &:hover {
    background-color:  rgb(26, 199, 138);
@@ -26,15 +29,15 @@
 
 
 .enlace {
-    color: #FF8653;
+    color: #78C841;
 &:hover {
-    color: #f78e61;
+    color: #55912e;
 }
 }
 /* // boton del navbar */
 .btn-login{
 
-    background-color:  rgb(26, 199, 138);
+    background-color: rgb(87, 173, 136);
     &:hover {
-   background-color:   rgb(26, 199, 138);
+   background-color:   rgb(59, 180, 161);
 }}

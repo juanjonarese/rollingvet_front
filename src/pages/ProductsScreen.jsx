@@ -74,7 +74,7 @@ const ProductsScreen = () => {
     <div className="container">
       <div className="row py-5">
         <div className="col">
-          <h1>Nuestros Mush para vos</h1>
+          <h1>Todo para tu mascotas</h1>
         </div>
       </div>
 
