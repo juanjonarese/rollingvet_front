@@ -16,7 +16,7 @@ const TableProductsApp = ({ products, borrarProducto, updateProduct }) => {
   return (
     <>
       <table className="table table-striped">
-        <thead>
+        {/* <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Title</th>
@@ -24,14 +24,14 @@ const TableProductsApp = ({ products, borrarProducto, updateProduct }) => {
             <th scope="col">Category</th>
             <th></th>
           </tr>
-        </thead>
+        </thead> */}
         <tbody>
           {products.map((product) => (
             <tr key={product._id}>
               <th scope="row">{product.id}</th>
               <td>{product.titulo}</td>
               <td>{product.precio}</td>
-              <td>{product.categoria}</td>
+              <td>{product.descripcion}</td>
               <td>
                 <div className="d-flex gap-2">
                   <button

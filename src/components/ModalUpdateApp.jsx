@@ -1,20 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "react-bootstrap/Modal";
 
-const ModalUpdateApp = (props) => {
-  const { show, handleClose, producto, updateProduct } = props;
+const ModalUpdateApp = ({ show, handleClose, producto, updateProduct }) => {
+  const { register, handleSubmit, reset } = useForm();
 
-  const { register, handleSubmit } = useForm();
+  useEffect(() => {
+    if (producto) {
+      reset({
+        title: producto.titulo,
+        price: producto.precio,
+        description: producto.descripcion,
+        image: producto.imagen,
+      });
+    }
+  }, [producto, reset]);
+
   const actualizarProducto = (datos) => {
-    updateProduct(producto.id, datos);
+    const datosActualizados = {
+      ...producto,
+      titulo: datos.title,
+      precio: datos.price,
+      descripcion: datos.description,
+      imagen: datos.image,
+    };
+    updateProduct(producto._id, datosActualizados);
     handleClose();
   };
-  //   console.log(producto);
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Editar Producto</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit(actualizarProducto)}>
@@ -23,10 +40,7 @@ const ModalUpdateApp = (props) => {
             <input
               type="text"
               className="form-control form-control-lg"
-              {...register("title", {
-                required: true,
-                value: producto.title,
-              })}
+              {...register("title", { required: true })}
               placeholder="Ej: Smartphone X200"
             />
           </div>
@@ -39,10 +53,7 @@ const ModalUpdateApp = (props) => {
                 <input
                   type="number"
                   className="form-control"
-                  {...register("price", {
-                    required: true,
-                    value: producto.price,
-                  })}
+                  {...register("price", { required: true })}
                   step="0.01"
                   min="0"
                   placeholder="Ej: 299.99"
@@ -55,10 +66,7 @@ const ModalUpdateApp = (props) => {
             <label className="form-label fw-bold">Descripción</label>
             <textarea
               className="form-control"
-              {...register("description", {
-                required: true,
-                value: producto.description,
-              })}
+              {...register("description", { required: true })}
               rows="4"
               placeholder="Describe detalladamente el producto..."
             ></textarea>
@@ -73,10 +81,7 @@ const ModalUpdateApp = (props) => {
               <input
                 type="url"
                 className="form-control"
-                {...register("image", {
-                  required: true,
-                  value: producto.image,
-                })}
+                {...register("image", { required: true })}
                 placeholder="https://ejemplo.com/imagen.jpg"
                 pattern="https://.*"
               />
