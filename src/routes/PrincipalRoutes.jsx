@@ -9,6 +9,7 @@ import ChangePassScreen from "../pages/ChangePassScreen";
 import AdminUsersScreen from "../pages/AdminUsersScreen";
 
 const PrincipalRoutes = () => {
+  return (
     <>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
@@ -19,9 +20,6 @@ const PrincipalRoutes = () => {
         <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
         <Route path="/changepass" element={<ChangePassScreen />} />
         <Route path="/adminusers" element={<AdminUsersScreen />} />
-        {/* <Route path="/about" element={<AboutScreen />} />
-        <Route path="/planes" element={<Planes />} />
-        <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </>
   );
