@@ -32,8 +32,8 @@ const FormAddProductApp = ({ addProduct }) => {
             <input
               type="text"
               className="form-control form-control-lg"
-              {...register("title", { required: true })}
-              placeholder="Ej: Smartphone X200"
+              {...register("titulo", { required: true })}
+              placeholder="Ej: Alimento para perros"
             />
           </div>
 
@@ -45,7 +45,7 @@ const FormAddProductApp = ({ addProduct }) => {
                 <input
                   type="number"
                   className="form-control"
-                  {...register("price", { required: true })}
+                  {...register("precio", { required: true })}
                   step="0.01"
                   min="0"
                   placeholder="Ej: 299.99"
@@ -53,7 +53,7 @@ const FormAddProductApp = ({ addProduct }) => {
               </div>
             </div>
 
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <label className="form-label fw-bold">Categoría</label>
               <select
                 className="form-select"
@@ -66,14 +66,14 @@ const FormAddProductApp = ({ addProduct }) => {
                 <option>Otros</option>
               </select>
               <div className="invalid-feedback">Selecciona una categoría</div>
-            </div>
+            </div> */}
           </div>
 
           <div className="mb-4">
             <label className="form-label fw-bold">Descripción</label>
             <textarea
               className="form-control"
-              {...register("description", { required: true })}
+              {...register("descripcion", { required: true })}
               rows="4"
               placeholder="Describe detalladamente el producto..."
             ></textarea>

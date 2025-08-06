@@ -5,7 +5,6 @@ import FormAddProductApp from "../components/FormAddProducApp";
 import TableProductsApp from "../components/TableProductsApp";
 import clientAxios from "../helpers/clientAxios";
 
-console.log("Renderizando AdminProductsScreen");
 const AdminProductsScreen = () => {
   const MySwal = withReactContent(Swal);
   const [productos, setProductos] = useState([]);
@@ -43,31 +42,46 @@ const AdminProductsScreen = () => {
     getProducts();
   }, []);
 
-  const addProduct = () => {};
+  const addProduct = async (nuevoProducto) => {
+    try {
+      const response = await clientAxios.post("/productos", nuevoProducto);
+      console.log("Producto guardado:", response.data);
 
-  const deleteProduct = (product) => {
-    const newProducts = productos.filter(
-      (producto) => producto.id !== product.id
-    );
-    MySwal.fire({
-      title: `Va a eliminar el producto: ${product.title}`,
-      showDenyButton: true,
-      confirmButtonText: "Si",
-      denyButtonText: `No`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setProductos(newProducts);
-        localStorage.setItem("productos", JSON.stringify(newProducts));
-      }
-    });
+      // Actualizá la lista si querés que se vea reflejado al instante
+      setProductos([...productos, response.data]);
+    } catch (error) {
+      console.error("Error al agregar producto:", error);
+    }
   };
 
-  const updateProduct = (id, datos) => {
-    const index = productos.findIndex((product) => product.id === id);
+  const deleteProduct = async (product) => {
+    const result = await MySwal.fire({
+      title: `¿Eliminar el producto: ${product.titulo}?`,
+      showDenyButton: true,
+      confirmButtonText: "Sí",
+      denyButtonText: "No",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await clientAxios.delete(`/productos/${product._id}`);
+        const newProducts = productos.filter((p) => p._id !== product._id);
+        setProductos(newProducts);
+        // localStorage.setItem("productos", JSON.stringify(newProducts));
+        MySwal.fire("Producto eliminado", "", "success");
+      } catch (error) {
+        MySwal.fire("Error", "No se pudo eliminar el producto", "error");
+        console.error(error);
+      }
+    }
+  };
+
+  const updateProduct = async (id, datos) => {
+    const response = await clientAxios.put(`/productos/${id}`, datos);
+    const index = productos.findIndex((product) => product._id === id);
     const productsLocal = [...productos];
     productsLocal[index] = { ...productsLocal[index], ...datos };
     setProductos(productsLocal);
-    localStorage.setItem("productos", JSON.stringify(productsLocal));
   };
 
   return (
