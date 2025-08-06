@@ -1,10 +1,10 @@
-import React from 'react';
 import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import juanImage from '../assets/juan.png';
 import luchoImage from '../assets/lucho.png';
+import leonelImage from '../assets/leonel.png';
 
-const AboutUsPage = () => {
+const SobreNosotros = () => {
   return (
     <Container fluid className="aboutus-container py-5">
       <Row className="justify-content-center text-center">
@@ -29,7 +29,6 @@ const AboutUsPage = () => {
           </div>
         </Col>
 
-        {/* Segunda imagen */}
         <Col xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
           <div className="grid-item-image">
             <Image src={luchoImage} alt="Nuestra misión" fluid rounded />
@@ -39,12 +38,11 @@ const AboutUsPage = () => {
 
         <Col xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
           <div className="grid-item-image">
-            <Image src="https://placehold.co/400x300/FFC72C/FFFFFF?text=Valores" alt="Nuestros valores" fluid rounded />
+            <Image src={leonelImage} alt="Nuestros valores" fluid rounded />
             <p className="image-caption mt-2">Valores que nos guían</p>
           </div>
         </Col>
 
-        {/* Cuarta imagen */}
         <Col xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
           <div className="grid-item-image">
             <Image src="https://placehold.co/400x300/C3F8FF/FFFFFF?text=Visión" alt="Nuestra visión a futuro" fluid rounded />
@@ -66,4 +64,4 @@ const AboutUsPage = () => {
   );
 };
 
-export default AboutUsPage;
+export default SobreNosotros;

@@ -7,6 +7,7 @@ import ProductsScreen from "../pages/ProductsScreen";
 import OneProductScreen from "../pages/OneProductScreen";
 import ChangePassScreen from "../pages/ChangePassScreen";
 import AdminUsersScreen from "../pages/AdminUsersScreen";
+import SobreNosotros from "../pages/SobreNosotros";
 
 const PrincipalRoutes = () => {
   return (
@@ -20,6 +21,7 @@ const PrincipalRoutes = () => {
         <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
         <Route path="/changepass" element={<ChangePassScreen />} />
         <Route path="/adminusers" element={<AdminUsersScreen />} />
+        <Route path="/nosotros" element={<SobreNosotros />} />
       </Routes>
     </>
   );
