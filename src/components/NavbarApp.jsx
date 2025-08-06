@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import LoginModalApp from "./LoginModalApp";
-import logo from "../assets/rolling-logo.svg";
+import rollinglogo from "../assets/rollinglogo.svg";
 
 const NavBarApp = () => {
   const [user, setUser] = useState(null);
@@ -37,10 +37,10 @@ const NavBarApp = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navabar-color texto-menu">
+      <nav className="navbar navbar-expand-lg  navbar-montserrat">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            <img src={logo} alt="Logo" />
+            <img src={rollinglogo} alt="Logo" />
           </Link>
           <button
             className="navbar-toggler"
@@ -63,7 +63,7 @@ const NavBarApp = () => {
                   }
                   to="/"
                 >
-                  Home
+                  Inicio
                 </NavLink>
               </li>
 
@@ -133,7 +133,7 @@ const NavBarApp = () => {
 
               <li className="nav-item">
                 {user ? (
-                  <button className="btn-vet" onClick={handleLogout}>
+                  <button className="btn btn-login" onClick={handleLogout}>
                     Cerrar sesión
                   </button>
                 ) : (
