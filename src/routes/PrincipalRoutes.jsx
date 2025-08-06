@@ -9,6 +9,7 @@ import ChangePassScreen from "../pages/ChangePassScreen";
 import AdminUsersScreen from "../pages/AdminUsersScreen";
 import AboutUsPage from "../pages/AboutUsPage";
 import FormularioPlanes from "../components/FormularioPlanes";
+import AdminProductsScreen from "../pages/AdminProductsScreen";
 
 const PrincipalRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const PrincipalRoutes = () => {
         <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
         <Route path="/changepass" element={<ChangePassScreen />} />
         <Route path="/adminusers" element={<AdminUsersScreen />} />
+        <Route path="/adminproducts" element={<AdminProductsScreen />} />
         <Route path="/FormularioPlanes" element={<FormularioPlanes />} />
         {/* <Route path="/about" element={<AboutScreen />} />
         <Route path="/planes" element={<Planes />} />

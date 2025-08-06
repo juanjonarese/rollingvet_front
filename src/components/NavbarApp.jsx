@@ -101,9 +101,9 @@ const NavBarApp = () => {
 
               {/* Botón de Admin - solo se muestra si el usuario es admin */}
               {user?.rolUsuario === "admin" && (
-                <li class="nav-item dropdown">
+                <li className="nav-item dropdown">
                   <a
-                    class="nav-link dropdown-toggle"
+                    className="nav-link dropdown-toggle"
                     href="#"
                     role="button"
                     data-bs-toggle="dropdown"
@@ -111,21 +111,21 @@ const NavBarApp = () => {
                   >
                     Administrador
                   </a>
-                  <ul class="dropdown-menu">
+                  <ul className="dropdown-menu">
                     <li>
-                      <Link className="dropdown-item" to="/products">
+                      <Link className="dropdown-item" to="/adminproducts">
                         Productos
                       </Link>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Pacientes
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <Link className="dropdown-item" to="/adminusers">
                         Usuarios
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </li>
