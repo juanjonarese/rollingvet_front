@@ -1,33 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import FormAddProductApp from "../components/FormAddProductApp";
+import FormAddProductApp from "../components/FormAddProducApp";
 import TableProductsApp from "../components/TableProductsApp";
-// Importar formulario para agregar producto
-// Importar Tabla de productos
+import clientAxios from "../helpers/clientAxios";
 
+console.log("Renderizando AdminProductsScreen");
 const AdminProductsScreen = () => {
   const MySwal = withReactContent(Swal);
-  const [productos, setProductos] = useState(
-    JSON.parse(localStorage.getItem("productos")) || []
-  );
+  const [productos, setProductos] = useState([]);
 
-  const addProduct = (datos) => {
-    //   const ultimoElemento=productos.at(-1)
-    //  const id= ultimoElemento.id+1
+  const getProducts = async () => {
+    try {
+      // setLoading(true);
+      const respuesta = await clientAxios.get("/productos");
+      console.log("RESPUESTA COMPLETA:", respuesta);
+      console.log("PRODUCTOS RECIBIDOS:", respuesta.data);
 
-    // {
-    //   id,
-    //   title,
-    //   description,
-    //   image
-
-    // }
-    const id = new Date().getTime();
-    const data = [...productos, { id, ...datos }];
-    setProductos(data);
-    localStorage.setItem("productos", JSON.stringify(data));
+      if (respuesta.status === 200) {
+        setProductos(respuesta.data.productos || respuesta.data);
+        console.log(respuesta.data.productos || respuesta.data);
+      } else {
+        MySwal.fire({
+          title: "Error",
+          text: "No se pudieron cargar los productos",
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      MySwal.fire({
+        title: "Error",
+        text:
+          error.response?.data?.message ||
+          "Hubo un error al cargar los productos",
+        icon: "error",
+      });
+      console.error("Error al obtener productos:", error);
+    }
   };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const addProduct = () => {};
 
   const deleteProduct = (product) => {
     const newProducts = productos.filter(
@@ -44,18 +60,9 @@ const AdminProductsScreen = () => {
         localStorage.setItem("productos", JSON.stringify(newProducts));
       }
     });
-
-    // const validar = confirm(`Va a eliminar el producto: ${product.title}`);
-    // if (validar) {
-    //   setProductos(newProducts);
-    //   localStorage.setItem("productos", JSON.stringify(newProducts));
-    // }
   };
 
   const updateProduct = (id, datos) => {
-    // {
-    //   title:'nuevo título'
-    // }
     const index = productos.findIndex((product) => product.id === id);
     const productsLocal = [...productos];
     productsLocal[index] = { ...productsLocal[index], ...datos };

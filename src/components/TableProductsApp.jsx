@@ -27,11 +27,11 @@ const TableProductsApp = ({ products, borrarProducto, updateProduct }) => {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr key={product.id}>
+            <tr key={product._id}>
               <th scope="row">{product.id}</th>
-              <td>{product.title}</td>
-              <td>{product.price}</td>
-              <td>{product.category}</td>
+              <td>{product.titulo}</td>
+              <td>{product.precio}</td>
+              <td>{product.categoria}</td>
               <td>
                 <div className="d-flex gap-2">
                   <button
