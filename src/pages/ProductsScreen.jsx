@@ -78,7 +78,7 @@ const ProductsScreen = () => {
         </div>
       </div>
 
-      <div className="row">
+      {/* <div className="row">
         <div className="col-12 col-md-6">
           <input
             type="text"
@@ -88,7 +88,7 @@ const ProductsScreen = () => {
             onChange={handleChange}
           />
         </div>
-      </div>
+      </div> */}
 
       {loading ? (
         <div className="row">
