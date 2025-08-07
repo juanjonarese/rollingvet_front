@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavbarApp from "./components/NavbarApp";
-import FooterApp from "./components/FooterApp";
-import PrincipalRoutes from "./routes/PrincipalRoutes";
+// src/App.jsx
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CarritoMP from "./components/CarritoMp";
 
-const App = () => {
+function App() {
   return (
-    <BrowserRouter>
-      <NavbarApp />
+    <Router>
       <Routes>
+        <Route path="/carritopage" element={<CarritoMP />} />
+        {/* otras rutas */}
       </Routes>
-      <PrincipalRoutes />
-      <FooterApp />
-    </BrowserRouter>
+    </Router>
   );
-};
+}
 
 export default App;
