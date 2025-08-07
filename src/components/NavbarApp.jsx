@@ -44,7 +44,7 @@ const NavBarApp = () => {
     return () => {
       window.removeEventListener("storage", checkUser);
     };
-  }, []); // ← sin dependencias, se ejecuta una sola vez al montar
+  }, [show]); // ← sin dependencias, se ejecuta una sola vez al montar
 
   return (
     <>
@@ -124,7 +124,7 @@ const NavBarApp = () => {
                   </a>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link className="dropdown-item" to="/adminproducts">
+                      <Link className="dropdown-item" to="/admin/adminproducts">
                         Productos
                       </Link>
                     </li>
@@ -134,7 +134,7 @@ const NavBarApp = () => {
                       </a>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/adminusers">
+                      <Link className="dropdown-item" to="/admin/adminusers">
                         Usuarios
                       </Link>
                     </li>
