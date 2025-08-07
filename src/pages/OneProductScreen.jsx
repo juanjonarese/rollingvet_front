@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import clientAxios from "../helpers/clientAxios";
-import "../css/oneProduct.css";
+import clientAxios from "../helpers/clientAxios"
+import "../css/unProducto.css";
 
 const OneProductScreen = () => {
   const { id } = useParams();
