@@ -6,8 +6,6 @@ import withReactContent from "sweetalert2-react-content";
 import { Link } from "react-router-dom";
 import clientAxios from "../helpers/clientAxios";
 
-import "../css/login.css";
-
 const LoginScreen = (props) => {
   const { handleClose } = props;
   const MySwal = withReactContent(Swal);
@@ -27,35 +25,29 @@ const LoginScreen = (props) => {
     try {
       console.log("Datos enviados:", datos);
 
-      // 1. Enviás los datos del formulario
+      // envio los datos del formulario
       const respuesta = await clientAxios.post("/usuarios/login", datos);
 
       console.log("Respuesta del backend:", respuesta.data);
 
       const { rolUsuario, token } = respuesta.data;
 
-      // 2. Validás si hay token
+      // valido si hay token
       if (token) {
-        // 3. Guardás usuario en localStorage
+        // guardo usuario en localStorage
         localStorage.setItem("user", JSON.stringify({ rolUsuario, token }));
 
-        // 4. Cerrás modal y navegás
-        handleClose();
+        // cierro modal y voy al home
+        // ✅ Solo cerrar modal si existe handleClose
+        if (typeof handleClose === "function") {
+          handleClose();
+        }
         navigate("/");
-      } else {
-        MySwal.fire({
-          title: "OOPS!",
-          text: "Correo o contraseña incorrectos",
-          icon: "error",
-        });
       }
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
       MySwal.fire({
         title: "Error",
-        text:
-          error.response?.data?.message ||
-          "No se pudo conectar con el servidor",
+        text: error.response.data.msg || "Ocurrió un error al iniciar sesión",
         icon: "error",
       });
     }
@@ -104,7 +96,7 @@ const LoginScreen = (props) => {
 
               <button
                 type="submit"
-                className="btn btn-lg w-100 my-3 text-white"
+                className="btn btn-lg w-100 my-3 text-white btn-login"
                 id="boton-login"
               >
                 Iniciar sesión
@@ -121,6 +113,19 @@ const LoginScreen = (props) => {
                   style={{ cursor: "pointer" }}
                 >
                   Registrate
+                </span>
+              </div>
+              <div className="text-center mt-4">
+                <span className="text-muted">¿olvidaste tu contraseña? </span>
+                <span
+                  onClick={() => {
+                    handleClose();
+                    navigate("/recoverymail");
+                  }}
+                  className="text-decoration-none fw-bold enlace"
+                  style={{ cursor: "pointer" }}
+                >
+                  Recuperar
                 </span>
               </div>
             </form>

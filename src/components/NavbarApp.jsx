@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import LoginModalApp from "./LoginModalApp";
-import logo from "../assets/logo.webp";
-import "../css/navbar.css";
+import rolling_logo from "../assets/rolling_logo.gif";
 
 const NavBarApp = () => {
   const [user, setUser] = useState(null);
@@ -21,27 +20,38 @@ const NavBarApp = () => {
 
   // Detectar usuario logueado al montar y cuando cambie el modal
   useEffect(() => {
-    const usuarioGuardado = localStorage.getItem("user");
-    if (usuarioGuardado) {
-      try {
-        const userData = JSON.parse(usuarioGuardado);
-        setUser(userData);
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-        localStorage.removeItem("user");
+    const checkUser = () => {
+      const usuarioGuardado = localStorage.getItem("user");
+      if (usuarioGuardado) {
+        try {
+          const userData = JSON.parse(usuarioGuardado);
+          setUser(userData);
+        } catch (error) {
+          console.error("Error parsing user data:", error);
+          localStorage.removeItem("user");
+          setUser(null);
+        }
+      } else {
         setUser(null);
       }
-    } else {
-      setUser(null);
-    }
-  }, [show]); // Se ejecuta cuando cambia el estado del modal
+    };
+
+    checkUser();
+
+    // Escuchar cambios manuales al localStorage (por ejemplo, desde otra pestaña o login externo)
+    window.addEventListener("storage", checkUser);
+
+    return () => {
+      window.removeEventListener("storage", checkUser);
+    };
+  }, []); // ← sin dependencias, se ejecuta una sola vez al montar
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navabar-color">
+      <nav className="navbar navbar-expand-lg  navbar-montserrat">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
-            <img src={logo} alt="Logo" />
+          <Link className="navbar-brand logo" to="/">
+            <img src={rolling_logo} alt="Logo" />
           </Link>
           <button
             className="navbar-toggler"
@@ -64,7 +74,7 @@ const NavBarApp = () => {
                   }
                   to="/"
                 >
-                  Home
+                  Inicio
                 </NavLink>
               </li>
 
@@ -73,9 +83,19 @@ const NavBarApp = () => {
                   className={({ isActive }) =>
                     isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
                   }
-                  to="/about"
+                  to="/aboutuspage"
                 >
                   Sobre Nosotros
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
+                  }
+                  to="/products"
+                >
+                  Productos
                 </NavLink>
               </li>
 
@@ -92,26 +112,44 @@ const NavBarApp = () => {
 
               {/* Botón de Admin - solo se muestra si el usuario es admin */}
               {user?.rolUsuario === "admin" && (
-                <li className="nav-item">
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
-                    }
-                    to="/admin"
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
                     Administrador
-                  </NavLink>
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to="/adminproducts">
+                        Productos
+                      </Link>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Pacientes
+                      </a>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/adminusers">
+                        Usuarios
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
               )}
 
               <li className="nav-item">
                 {user ? (
-                  <button className="btn btn-danger" onClick={handleLogout}>
+                  <button className="btn btn-login" onClick={handleLogout}>
                     Cerrar sesión
                   </button>
                 ) : (
                   <button
-                    className="btn btn-login"
+                    className="btn  btn-login"
                     onClick={() => setShow(true)}
                   >
                     <FontAwesomeIcon icon={faUser} /> Login

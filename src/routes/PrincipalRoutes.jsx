@@ -1,13 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import HomeScreen from "../pages/HomeScreen";
 import RegisterScreen from "../pages/RegisterScreen";
-import RecoveryPassScreen from "../pages/RecoveryPassScreen";
-import LoginScreen from "../pages/LoginScreen";
+import RecoveryPassMailScreen from "../pages/RecoveryPassScreen";
 import ProductsScreen from "../pages/ProductsScreen";
-import OneProductScreen from "../pages/OneProductScreen"; // Importa OneProductScreen
-// import AboutScreen from "../pages/AboutScreen";
-// import Planes from "../pages/Planes";
-// import NotFound from "../pages/NotFound";
+import OneProductScreen from "../pages/OneProductScreen";
+import ChangePassScreen from "../pages/ChangePassScreen";
+import AdminUsersScreen from "../pages/AdminUsersScreen";
+import AboutUsPage from "../pages/AboutUsPage";
+import FormularioPlanes from "../components/FormularioPlanes";
+import AdminProductsScreen from "../pages/AdminProductsScreen";
+import LoginPage from "../pages/LoginPage";
 
 const PrincipalRoutes = () => {
   return (
@@ -15,11 +17,15 @@ const PrincipalRoutes = () => {
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/products" element={<ProductsScreen />} />
-        <Route path="/product/:id" element={<OneProductScreen />} />{" "}
-        {/* Nueva ruta agregada */}
-        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/product/:id" element={<OneProductScreen />} />
+        <Route path="/aboutuspage" element={<AboutUsPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterScreen />} />
-        <Route path="/recovery" element={<RecoveryPassScreen />} />
+        <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
+        <Route path="/changepass" element={<ChangePassScreen />} />
+        <Route path="/adminusers" element={<AdminUsersScreen />} />
+        <Route path="/adminproducts" element={<AdminProductsScreen />} />
+        <Route path="/FormularioPlanes" element={<FormularioPlanes />} />
         {/* <Route path="/about" element={<AboutScreen />} />
         <Route path="/planes" element={<Planes />} />
         <Route path="*" element={<NotFound />} /> */}
