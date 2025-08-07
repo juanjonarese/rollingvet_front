@@ -67,7 +67,7 @@ const AdminProductsScreen = () => {
         await clientAxios.delete(`/productos/${product._id}`);
         const newProducts = productos.filter((p) => p._id !== product._id);
         setProductos(newProducts);
-        // localStorage.setItem("productos", JSON.stringify(newProducts));
+
         MySwal.fire("Producto eliminado", "", "success");
       } catch (error) {
         MySwal.fire("Error", "No se pudo eliminar el producto", "error");
@@ -88,7 +88,7 @@ const AdminProductsScreen = () => {
     <div className="container">
       <div className="row">
         <div className="col">
-          <h1>Administración de productos</h1>
+          <h2 className="texto-home">Administración de productos</h2>
         </div>
       </div>
       <FormAddProductApp addProduct={addProduct} />

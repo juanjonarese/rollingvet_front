@@ -140,7 +140,7 @@ const RegisterScreen = () => {
 
               <button
                 type="submit"
-                className="registro-btn btn btn-custom btn-lg w-100 mb-3"
+                className="registro-btn btn btn-login btn-lg w-100 mb-3"
               >
                 Registrarse
               </button>

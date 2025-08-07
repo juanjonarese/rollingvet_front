@@ -59,7 +59,7 @@ const ChangePassScreen = () => {
           />
         </Form.Group>
 
-        <div className="text-center">
+        <div className="text-center btn-login">
           <Button variant="primary" type="submit">
             Enviar Datos
           </Button>
