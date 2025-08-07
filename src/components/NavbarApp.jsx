@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import LoginModalApp from "./LoginModalApp";
-import rollinglogo from "../assets/rollinglogo.svg";
+import rolling_logo from "../assets/rolling_logo.gif";
 
 const NavBarApp = () => {
   const [user, setUser] = useState(null);
@@ -39,8 +39,8 @@ const NavBarApp = () => {
     <>
       <nav className="navbar navbar-expand-lg  navbar-montserrat">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
-            <img src={rollinglogo} alt="Logo" />
+          <Link className="navbar-brand logo" to="/">
+            <img src={rolling_logo} alt="Logo" />
           </Link>
           <button
             className="navbar-toggler"

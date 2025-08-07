@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import Card from "../components/Cards";
 import CarouselApp from "../components/CarouselApp";
-import CardApiClima from "../components/CardApiClima";
+import banner from "../assets/banner.jpeg";
+
 import "../css/home.css";
 
 const HomeScreen = () => {
@@ -32,18 +33,43 @@ const HomeScreen = () => {
 
   return (
     <>
-      <CarouselApp carouselImg={carouselImg} id={"carousel1"} />
+      <div className="container-fluid ">
+        <div className="row">
+          <CarouselApp carouselImg={carouselImg} id={"carousel1"} />
+        </div>
+      </div>
 
-      <div className="container">
-        <div className="row justify-content-between align-items-center text-center  mb-3">
-          <div className="col-md-8 mb-3 mt-3">
-            <h1>Rolling Vet</h1>
+      <div className="container my-1">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-10 p-4 rounded emergencia-banner">
+            <div className="row">
+              <div className="col-12 col-sm-6 d-flex align-items-start gap-3">
+                <div className="display-6 text-white">✱</div>
+                <div>
+                  <h4 className="text-white mb-1">Emergencias</h4>
+                  <p className="text-white mb-0">
+                    Atendemos 24 hs.
+                    <br /> Servicio de ambulancia.
+                  </p>
+                </div>
+              </div>
+              <div className="col-12 col-sm-6 text-sm-end mt-3 mt-sm-0">
+                <small className="text-white-50">LLAMANOS AL</small>
+                <h3 className="m-0 fw-bold text-white">0800 555 65858</h3>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div className="container ">
+
+      <div className="container texto-home ">
         <div className="row">
-          <div className="col-md-10 bg-light p-4 rounded w-70">
+          <div className="row justify-content-between align-items-center text-center ">
+            <div className="col-md-12 mb-1 mt-3">
+              <h1>RollingVet</h1>
+            </div>
+          </div>
+          <div className="col-md-12 bg-light p-3 rounded w-70">
             <p>
               En RollingVet nos dedicamos con pasión al cuidado integral de tu
               mascota. Ofrecemos atención veterinaria de calidad, tratamientos
@@ -55,19 +81,7 @@ const HomeScreen = () => {
               una vida larga, feliz y saludable.
             </p>
           </div>
-
-          <div className="col-md-2 d-flex justify-content-md-end ">
-            <CardApiClima />
-          </div>
         </div>
-      </div>
-
-      <div className="container mt-4 d-flex justify-content-center ">
-        <img
-          src="https://www.pedigree.com.ar/cdn-cgi/image/format=auto,q=90/sites/g/files/fnmzdf1506/files/2022-10/landing-hero-adult-default.png"
-          alt="Publicidad"
-          className="img-fluid"
-        />
       </div>
 
       {/* Cards de planes */}
@@ -78,6 +92,11 @@ const HomeScreen = () => {
               <Card titulo={card.titulo} descripcion={card.descripcion} />
             </div>
           ))}
+        </div>
+      </div>
+      <div className="container-fluid px-0 mb-3 px-5">
+        <div className="bg-light text-center">
+          <img src={banner} alt="Banner" className="img-fluid w-100" />
         </div>
       </div>
     </>

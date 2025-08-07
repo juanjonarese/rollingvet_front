@@ -93,7 +93,7 @@ const LoginScreen = (props) => {
 
               <button
                 type="submit"
-                className="btn btn-lg w-100 my-3 text-white"
+                className="btn btn-lg w-100 my-3 text-white btn-login"
                 id="boton-login"
               >
                 Iniciar sesión
