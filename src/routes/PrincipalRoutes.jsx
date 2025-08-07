@@ -14,6 +14,7 @@ import AdminRoute from "./AdminRoutes.jsx";
 import LoginPage from "../pages/LoginPage";
 import SobreNosotros from "../pages/SobreNosotros";
 import AdminProductsScreen from "../pages/AdminProductsScreen.jsx";
+import PacientesScreen from "../pages/PacientesScreen.jsx"
 
 const PrincipalRoutes = () => {
   return (
@@ -44,6 +45,14 @@ const PrincipalRoutes = () => {
         element={
           <AdminRoute>
             <AdminProductsScreen />
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/pacientes"
+        element={
+          <AdminRoute>
+            <PacientesScreen />
           </AdminRoute>
         }
       />
