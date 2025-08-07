@@ -8,10 +8,13 @@ import OneProductScreen from "../pages/OneProductScreen";
 import ChangePassScreen from "../pages/ChangePassScreen";
 import AdminUsersScreen from "../pages/AdminUsersScreen";
 import SobreNosotros from "../pages/SobreNosotros";
+import CarritoPage from "../pages/CarritoPage";
+
+
 
 const PrincipalRoutes = () => {
   return (
-    <>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/products" element={<ProductsScreen />} />
@@ -22,8 +25,9 @@ const PrincipalRoutes = () => {
         <Route path="/changepass" element={<ChangePassScreen />} />
         <Route path="/adminusers" element={<AdminUsersScreen />} />
         <Route path="/aboutuspage" element={<SobreNosotros />} />
+        <Route path="/carritopage" element={<CarritoPage />} />
       </Routes>
-    </>
+    </BrowserRouter>
   );
 };
 
