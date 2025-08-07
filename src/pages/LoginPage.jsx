@@ -6,7 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 import { Link } from "react-router-dom";
 import clientAxios from "../helpers/clientAxios";
 
-const LoginScreen = (props) => {
+const LoginPage = (props) => {
   const { handleClose } = props;
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
@@ -36,6 +36,8 @@ const LoginScreen = (props) => {
       if (token) {
         // guardo usuario en localStorage
         localStorage.setItem("user", JSON.stringify({ rolUsuario, token }));
+
+        window.dispatchEvent(new Event("storage")); // fuerza la actualización
 
         // cierro modal y voy al home
         // ✅ Solo cerrar modal si existe handleClose
@@ -104,29 +106,23 @@ const LoginScreen = (props) => {
 
               <div className="text-center mt-4">
                 <span className="text-muted">¿No tenés cuenta? </span>
-                <span
-                  onClick={() => {
-                    handleClose();
-                    navigate("/signup");
-                  }}
+                <Link
                   className="text-decoration-none fw-bold enlace"
                   style={{ cursor: "pointer" }}
+                  to="/signup"
                 >
                   Registrate
-                </span>
+                </Link>
               </div>
               <div className="text-center mt-4">
-                <span className="text-muted">¿olvidaste tu contraseña? </span>
-                <span
-                  onClick={() => {
-                    handleClose();
-                    navigate("/recoverymail");
-                  }}
+                <span className="text-muted">¿Olvidaste tu contraseña? </span>
+                <Link
                   className="text-decoration-none fw-bold enlace"
                   style={{ cursor: "pointer" }}
+                  to="/recoverymail"
                 >
-                  Recuperar
-                </span>
+                  Recperar
+                </Link>
               </div>
             </form>
           </div>
@@ -136,4 +132,4 @@ const LoginScreen = (props) => {
   );
 };
 
-export default LoginScreen;
+export default LoginPage;

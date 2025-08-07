@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import HomeScreen from "../pages/HomeScreen";
 import RegisterScreen from "../pages/RegisterScreen";
 import RecoveryPassMailScreen from "../pages/RecoveryPassScreen";
-import LoginScreen from "../pages/LoginScreen";
 import ProductsScreen from "../pages/ProductsScreen";
 import OneProductScreen from "../pages/OneProductScreen";
 import ChangePassScreen from "../pages/ChangePassScreen";
@@ -10,6 +9,7 @@ import AdminUsersScreen from "../pages/AdminUsersScreen";
 import AboutUsPage from "../pages/AboutUsPage";
 import FormularioPlanes from "../components/FormularioPlanes";
 import AdminProductsScreen from "../pages/AdminProductsScreen";
+import LoginPage from "../pages/LoginPage";
 
 const PrincipalRoutes = () => {
   return (
@@ -19,7 +19,7 @@ const PrincipalRoutes = () => {
         <Route path="/products" element={<ProductsScreen />} />
         <Route path="/product/:id" element={<OneProductScreen />} />
         <Route path="/aboutuspage" element={<AboutUsPage />} />
-        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterScreen />} />
         <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
         <Route path="/changepass" element={<ChangePassScreen />} />

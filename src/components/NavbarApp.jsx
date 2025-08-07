@@ -20,20 +20,31 @@ const NavBarApp = () => {
 
   // Detectar usuario logueado al montar y cuando cambie el modal
   useEffect(() => {
-    const usuarioGuardado = localStorage.getItem("user");
-    if (usuarioGuardado) {
-      try {
-        const userData = JSON.parse(usuarioGuardado);
-        setUser(userData);
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-        localStorage.removeItem("user");
+    const checkUser = () => {
+      const usuarioGuardado = localStorage.getItem("user");
+      if (usuarioGuardado) {
+        try {
+          const userData = JSON.parse(usuarioGuardado);
+          setUser(userData);
+        } catch (error) {
+          console.error("Error parsing user data:", error);
+          localStorage.removeItem("user");
+          setUser(null);
+        }
+      } else {
         setUser(null);
       }
-    } else {
-      setUser(null);
-    }
-  }, [show]); // Se ejecuta cuando cambia el estado del modal
+    };
+
+    checkUser();
+
+    // Escuchar cambios manuales al localStorage (por ejemplo, desde otra pestaña o login externo)
+    window.addEventListener("storage", checkUser);
+
+    return () => {
+      window.removeEventListener("storage", checkUser);
+    };
+  }, []); // ← sin dependencias, se ejecuta una sola vez al montar
 
   return (
     <>
