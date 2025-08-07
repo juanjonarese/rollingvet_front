@@ -7,12 +7,13 @@ import OneProductScreen from "../pages/OneProductScreen";
 import ChangePassScreen from "../pages/ChangePassScreen";
 import AdminUsersScreen from "../pages/AdminUsersScreen";
 import AdminProducts from "../pages/AdminProductsScreen.jsx";
-import AboutUsPage from "../pages/AboutUsPage";
+// import AboutUsPage from "../pages/AboutUsPage";
 import Error404 from "../pages/error404.jsx";
 import FormularioPlanes from "../components/FormularioPlanes.jsx";
 import FooterApp from "../components/FooterApp.jsx";
 
 import LoginPage from "../pages/LoginPage";
+import SobreNosotros from "../pages/SobreNosotros";
 
 const PrincipalRoutes = () => {
   return (
@@ -21,7 +22,7 @@ const PrincipalRoutes = () => {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/products" element={<ProductsScreen />} />
         <Route path="/product/:id" element={<OneProductScreen />} />
-        <Route path="/aboutuspage" element={<AboutUsPage />} />
+        <Route path="/aboutuspage" element={<SobreNosotros />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterScreen />} />
         <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />

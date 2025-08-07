@@ -3,24 +3,26 @@ import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import juanImage from "../assets/juan.png";
 import luchoImage from "../assets/lucho.png";
+import leonelImage from "../assets/leonel.png";
 
-const AboutUsPage = () => {
+const SobreNosotros = () => {
   return (
     <Container fluid className="aboutus-container py-5">
       <Row className="justify-content-center text-center">
         <Col md={10} lg={8}>
           <h1 className="aboutus-title mb-4">Sobre Nosotros</h1>
           <p className="aboutus-text mb-5">
-            Somos un equipo apasionado dedicado a [tu misión o lo que hace tu
-            empresa/proyecto]. Nuestra visión es [tu visión]. Creemos firmemente
-            en [tus valores clave] y nos esforzamos por [lo que quieres lograr].
-            Con años de experiencia en [tu campo], estamos comprometidos con la
-            excelencia y la satisfacción de nuestros usuarios/clientes.
+            Somos un equipo apasionado dedicado a mejorar la experiencia
+            veterinaria a través de la tecnología. Nuestra visión es simplificar
+            y potenciar el cuidado animal. Creemos firmemente en la empatía, la
+            innovación y la dedicación, y nos esforzamos por brindar
+            herramientas que marquen la diferencia.
           </p>
         </Col>
       </Row>
 
       <Row className="image-grid justify-content-center g-4 mb-5">
+        {/* Juan */}
         <Col
           xs={12}
           sm={6}
@@ -29,12 +31,12 @@ const AboutUsPage = () => {
           className="d-flex justify-content-center"
         >
           <div className="grid-item-image">
-            <Image src={juanImage} alt="Miembro del equipo 1" fluid rounded />
+            <Image src={juanImage} alt="Juan" fluid rounded />
             <p className="image-caption mt-2">Nuestro equipo de desarrollo</p>
           </div>
         </Col>
 
-        {/* Segunda imagen */}
+        {/* Lucho */}
         <Col
           xs={12}
           sm={6}
@@ -43,11 +45,12 @@ const AboutUsPage = () => {
           className="d-flex justify-content-center"
         >
           <div className="grid-item-image">
-            <Image src={luchoImage} alt="Nuestra misión" fluid rounded />
+            <Image src={luchoImage} alt="Lucho" fluid rounded />
             <p className="image-caption mt-2">Trabajando en nuestra misión</p>
           </div>
         </Col>
 
+        {/* Leonel */}
         <Col
           xs={12}
           sm={6}
@@ -56,17 +59,11 @@ const AboutUsPage = () => {
           className="d-flex justify-content-center"
         >
           <div className="grid-item-image">
-            <Image
-              src="https://placehold.co/400x300/FFC72C/FFFFFF?text=Valores"
-              alt="Nuestros valores"
-              fluid
-              rounded
-            />
+            <Image src={leonelImage} alt="Leonel" fluid rounded />
             <p className="image-caption mt-2">Valores que nos guían</p>
           </div>
         </Col>
 
-        {/* Cuarta imagen */}
         <Col
           xs={12}
           sm={6}
@@ -99,4 +96,4 @@ const AboutUsPage = () => {
   );
 };
 
-export default AboutUsPage;
+export default SobreNosotros;
