@@ -21,7 +21,7 @@ const PrincipalRoutes = () => {
         <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
         <Route path="/changepass" element={<ChangePassScreen />} />
         <Route path="/adminusers" element={<AdminUsersScreen />} />
-        <Route path="/nosotros" element={<SobreNosotros />} />
+        <Route path="/aboutuspage" element={<SobreNosotros />} />
       </Routes>
     </>
   );
