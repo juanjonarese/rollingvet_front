@@ -129,9 +129,9 @@ const NavBarApp = () => {
                       </Link>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <Link className="dropdown-item" to="/admin/pacientes">
                         Pacientes
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <Link className="dropdown-item" to="/admin/adminusers">
