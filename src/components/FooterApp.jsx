@@ -5,7 +5,7 @@ const FooterApp = () => {
       <div className="container">
         <div className="row text-white">
           {/* Redes sociales */}
-          <div className="col-12 col-md-4 mb-4 d-flex gap-3 justify-content-center">
+          <div className="col-12 col-md-4 mb-4 d-flex gap-3 justify-content-center ">
             <i className="bi bi-instagram fs-3"></i>
             <i className="bi bi-tiktok fs-3"></i>
             <i className="bi bi-linkedin fs-3"></i>
