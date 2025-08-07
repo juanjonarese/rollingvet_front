@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const clientAxios = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://rollingvet-db.vercel.app/",
 });
 
 const token = JSON.parse(sessionStorage.getItem("token"));
