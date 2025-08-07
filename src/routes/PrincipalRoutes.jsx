@@ -14,6 +14,7 @@ import FooterApp from "../components/FooterApp.jsx";
 
 import LoginPage from "../pages/LoginPage";
 import SobreNosotros from "../pages/SobreNosotros";
+import PacientesScreen from "../pages/PacientesScreen"
 
 const PrincipalRoutes = () => {
   return (
@@ -32,6 +33,7 @@ const PrincipalRoutes = () => {
         <Route path="/footerapp" element={<FooterApp />} />
         <Route path="/adminproducts" element={<AdminProducts />} />
         <Route path="/FormularioPlanes" element={<FormularioPlanes />} />
+        <Route path="/pacientes" element={<PacientesScreen/>}/>
 
         {/* <Route path="/about" element={<AboutScreen />} />
         <Route path="/planes" element={<Planes />} />
