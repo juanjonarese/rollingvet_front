@@ -6,48 +6,43 @@ import CardApiClima from "../components/CardApiClima";
 
 const FooterApp = () => {
   return (
-    <footer className="footer  text-white py-4">
-      <div className="container">
-        <div className="row text-white">
+   <footer className="footer text-white py-4">
+  <div className="container">
+    <div className="row align-items-center text-center">
 
-          <div className="col-12 text-center">
-            <h3>Veterinaria Rolling</h3>
+      {/* Izquierda - Íconos */}
+      <div className="col-lg-4 col-sm-12 d-flex justify-content-center justify-content-lg-start gap-3">
+        <Link to="/Error404" className="text-decoration-none text-white">
+          <i className="bi bi-instagram fs-3"></i>
+        </Link>
+        <Link to="/Error404" className="text-decoration-none text-white">
+          <i className="bi bi-tiktok fs-3"></i>
+        </Link>
+        <Link to="/Error404" className="text-decoration-none text-white">
+          <i className="bi bi-linkedin fs-3"></i>
+        </Link>
+      </div>
 
-            <p>Veterinaria al cuidado de tus mascotas</p>
+      {/* Centro - Texto */}
+      <div className="col-lg-4 col-sm-12">
+        <h3>Veterinaria Rolling</h3>
+        <p>Veterinaria al cuidado de tus mascotas</p>
+        <p>v1.0.0</p>
+      </div>
 
-            <p>v1.0.0</p>
-          </div>
-          <div className="col-12 d-flex gap-3 justify-content-center">
-            <Link to="/Error404" className="text-decoration-none text-white">
-              <i className="bi bi-instagram fs-3"></i>
-            </Link>
-            <Link to="/Error404" className="text-decoration-none text-white">
-              <i className="bi bi-tiktok fs-3"></i>
-            </Link>
-            <Link to="/Error404" className="text-decoration-none text-white">
-              <i className="bi bi-linkedin fs-3"></i>
-            </Link>
-
-          </div>
-
-          {/* Texto central */}
-          <div className="col-12 col-md-4 mb-4 text-center">
-            <h3>Veterinaria Rolling</h3>
-            <p>Veterinaria al cuidado de tus mascotas</p>
-            <p>v1.0.0</p>
-          </div>
-
-          {/* Clima */}
-          <div className="col-12 col-md-4 d-flex justify-content-center">
-            <div
-              style={{ transform: "scale(0.9)", transformOrigin: "top center" }}
-            >
-              <CardApiClima />
-            </div>
-          </div>
+      {/* Derecha - Clima */}
+      <div className="col-lg-4 col-sm-12 d-flex justify-content-center justify-content-lg-end">
+        <div style={{ transform: "scale(0.9)", transformOrigin: "top center" }}>
+          <CardApiClima />
         </div>
       </div>
-    </footer>
+
+    </div>
+  </div>
+</footer>
+
+
+
   );
 };
 
