@@ -70,7 +70,7 @@ const HomeScreen = () => {
             </div>
           </div>
           <div className="col-md-12 bg-light p-3 rounded w-70">
-            <p>
+            <p className="text-justify">
               En RollingVet nos dedicamos con pasión al cuidado integral de tu
               mascota. Ofrecemos atención veterinaria de calidad, tratamientos
               personalizados y asesoramiento profesional en cada etapa de su
