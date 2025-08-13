@@ -1,20 +1,15 @@
-import React from "react";
-import Card from '../components/Cards';
+import React from 'react';
+import CardsPlanes from '../components/CardsPlanes';
+import { Container } from 'react-bootstrap';
 
 const HomeScreen = () => {
-const cards = [
-    { id: 1, titulo: 'Plan Básico "Cuida Tú Mascota"', descripcion: 'Ideal para dueños responsables con poco presupuesto.' },
-    { id: 2, titulo: 'Plan Intermedio "Mascota Feliz"', descripcion: 'Para quienes quieren más control en la salud de su mascota.' },
-    { id: 3, titulo: 'Plan Premium "Rolling VIP"', descripcion: 'Para dueños exigentes y mascotas mimadas.' },
-  ];
-
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-around', padding: 20 }}>
-      {cards.map(card => (
-        <Card key={card.id} titulo={card.titulo} descripcion={card.descripcion} />
-      ))}
-    </div>
+    <Container className="my-5">
+      <CardsPlanes />
+    </Container>
   );
 };
 
 export default HomeScreen;
+
+

@@ -1,14 +1,12 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavbarApp from "./components/NavbarApp";
-import FooterApp from "./components/FooterApp";
-import PrincipalRoutes from "./routes/PrincipalRoutes";
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import PrincipalRoutes from './routes/PrincipalRoutes';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (
     <BrowserRouter>
-      <NavbarApp />
       <PrincipalRoutes />
-      <FooterApp />
     </BrowserRouter>
   );
 };
