@@ -1,7 +1,6 @@
 import React from 'react';
 import CardsPlanes from '../components/CardsPlanes';
 import { Container } from 'react-bootstrap';
-import FormularioPlanes from '../components/FormularioPlanes';
 
 const PlanesPage = () => {
   return (

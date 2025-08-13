@@ -1,20 +1,40 @@
-.form-container {
-  max-width: 450px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #f0f8ff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 100, 180, 0.2);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #1a1a1a;
+:root {
+  --primary: #57ad88;
+  --primary-hover: #4a9474;
+  --bg: #ffff;
+  --card-bg: #ffffff;
+  --text: #2c3e50;
+  --success: #16a34a;
+  --error: #dc2626;
+  --border: #e2e8f0;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --radius: 12px;
+  --transition: 0.2s ease-in-out;
 }
 
-.form-container h1 {
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  font-family: 'Arial', sans-serif;
+}
+
+.form-container {
+  max-width: 480px;
+  margin: 3rem auto;
+  padding: 1.75rem 1.5rem;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.form-title {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 600;
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: #004a99;
 }
 
 .contact-form {
@@ -26,80 +46,79 @@
 .form-group {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
 
-.form-group label {
-  margin-bottom: 0.4rem;
-  font-weight: 600;
+.form-input,
+.form-textarea {
+  padding: 0.75rem 1rem;
   font-size: 1rem;
-  color: #003366;
-}
-
-.form-group input,
-.form-group textarea {
-  padding: 0.5rem 0.75rem;
-  border: 1.5px solid #7baed9;
+  border: 1px solid var(--border);
   border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  resize: vertical;
-  background-color: #e6f0ff;
-  color: #003366;
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: #6699cc;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
   outline: none;
-  border-color: #0059b3; /* Azul más fuerte al focus */
-  box-shadow: 0 0 5px rgba(0, 89, 179, 0.5);
-  background-color: #fff;
-  color: #00264d;
+  background: #fff;
+  transition: border var(--transition), box-shadow var(--transition);
+  resize: vertical;
 }
 
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(87, 173, 136, 0.2);
+}
 
-button[type="submit"] {
-  padding: 0.7rem;
-  background-color: #0059b3;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
+.btn-submit {
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 0.5rem;
-}
-
-button[type="submit"]:hover {
-  background-color: #003d73;
-}
-
-Mensajes de estado
-.status-message {
-  margin-top: 1rem;
+  padding: 0.85rem 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  background: var(--primary);
+  color: #fff;
+  transition: background var(--transition), transform 0.15s ease;
+  width: 100%;
+}
+
+.btn-submit:hover {
+  background: var(--primary-hover);
+}
+
+.btn-submit:active {
+  transform: scale(0.97);
+}
+
+.status-message {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 5px;
+  font-weight: 500;
   text-align: center;
+  display: block;
 }
 
 .status-message.success {
-  color: #28a745;
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--success);
+  border: 1px solid var(--success);
 }
 
 .status-message.error {
-  color: #64040e;
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--error);
+  border: 1px solid var(--error);
 }
 
-
-@media (max-width: 500px) {
+@media (max-width: 560px) {
   .form-container {
-    margin: 1rem;
-    padding: 1.5rem;
+    margin: 2rem 1rem;
+    padding: 1.25rem 1rem;
   }
 }
-
