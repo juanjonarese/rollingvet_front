@@ -1,55 +1,50 @@
-/* Contenedor general del formulario */
 .form-container {
   max-width: 450px;
   margin: 2rem auto;
   padding: 2rem;
-  background: #f0f8ff; /* Fondo azul clarito */
+  background: #f0f8ff;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 100, 180, 0.2);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #1a1a1a; /* Texto más oscuro */
+  color: #1a1a1a;
 }
 
-/* Título */
 .form-container h1 {
   text-align: center;
   margin-bottom: 1.5rem;
   font-weight: 700;
   font-size: 1.8rem;
-  color: #004a99; /* Azul más intenso */
+  color: #004a99;
 }
 
-/* Formulario */
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-/* Grupo de campo */
 .form-group {
   display: flex;
   flex-direction: column;
 }
 
-/* Etiquetas */
+
 .form-group label {
   margin-bottom: 0.4rem;
   font-weight: 600;
   font-size: 1rem;
-  color: #003366; /* Azul oscuro para etiquetas */
+  color: #003366;
 }
 
-/* Inputs y textarea */
 .form-group input,
 .form-group textarea {
   padding: 0.5rem 0.75rem;
-  border: 1.5px solid #7baed9; /* Azul claro borde */
+  border: 1.5px solid #7baed9;
   border-radius: 6px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
   resize: vertical;
-  background-color: #e6f0ff; /* Fondo inputs azul muy claro */
+  background-color: #e6f0ff;
   color: #003366;
 }
 
@@ -67,10 +62,10 @@
   color: #00264d;
 }
 
-/* Botón */
+
 button[type="submit"] {
   padding: 0.7rem;
-  background-color: #0059b3; /* Azul fuerte */
+  background-color: #0059b3;
   color: white;
   font-size: 1.1rem;
   font-weight: 700;
@@ -82,7 +77,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #003d73; /* Azul oscuro al hover */
+  background-color: #003d73;
 }
 
 Mensajes de estado
@@ -93,14 +88,14 @@ Mensajes de estado
 }
 
 .status-message.success {
-  color: #28a745; /* Verde */
+  color: #28a745;
 }
 
 .status-message.error {
-  color: #64040e; /* Rojo */
+  color: #64040e;
 }
 
-/* Responsive pequeño */
+
 @media (max-width: 500px) {
   .form-container {
     margin: 1rem;

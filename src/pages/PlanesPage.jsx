@@ -10,7 +10,6 @@ const PlanesPage = () => {
       <p className="text-center text-muted mb-5">
         Elige el plan que mejor se adapte a las necesidades de tu mascota y disfruta de un cuidado integral.
       </p>
-      {/* Usamos directamente CardsPlanes, que ya mapea todos los planes */}
       <CardsPlanes />
     </Container>
   );
