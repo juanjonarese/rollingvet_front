@@ -1,8 +1,9 @@
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import juanImage from '../assets/juan.png';
-import luchoImage from '../assets/lucho.png';
-import leonelImage from '../assets/leonel.png';
+import React from "react";
+import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import juanImage from "../assets/juan.png";
+import luchoImage from "../assets/lucho.png";
+import leonelImage from "../assets/leonel.png";
 
 const SobreNosotros = () => {
   return (
@@ -11,41 +12,72 @@ const SobreNosotros = () => {
         <Col md={10} lg={8}>
           <h1 className="aboutus-title mb-4">Sobre Nosotros</h1>
           <p className="aboutus-text mb-5">
-            Somos un equipo apasionado dedicado a [tu misión o lo que hace tu empresa/proyecto].
-            Nuestra visión es [tu visión]. Creemos firmemente en [tus valores clave]
-            y nos esforzamos por [lo que quieres lograr].
-            Con años de experiencia en [tu campo], estamos comprometidos con la excelencia
-            y la satisfacción de nuestros usuarios/clientes.
+            Somos un equipo apasionado dedicado a mejorar la experiencia
+            veterinaria a través de la tecnología. Nuestra visión es simplificar
+            y potenciar el cuidado animal. Creemos firmemente en la empatía, la
+            innovación y la dedicación, y nos esforzamos por brindar
+            herramientas que marquen la diferencia.
           </p>
         </Col>
       </Row>
 
       <Row className="image-grid justify-content-center g-4 mb-5">
-
-        <Col xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
+        {/* Juan */}
+        <Col
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
+          className="d-flex justify-content-center"
+        >
           <div className="grid-item-image">
-            <Image src={juanImage} alt="Miembro del equipo 1" fluid rounded />
+            <Image src={juanImage} alt="Juan" fluid rounded />
             <p className="image-caption mt-2">Nuestro equipo de desarrollo</p>
           </div>
         </Col>
 
-        <Col xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
+        {/* Lucho */}
+        <Col
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
+          className="d-flex justify-content-center"
+        >
           <div className="grid-item-image">
-            <Image src={luchoImage} alt="Nuestra misión" fluid rounded />
+            <Image src={luchoImage} alt="Lucho" fluid rounded />
             <p className="image-caption mt-2">Trabajando en nuestra misión</p>
           </div>
         </Col>
 
-        <Col xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
+        {/* Leonel */}
+        <Col
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
+          className="d-flex justify-content-center"
+        >
           <div className="grid-item-image">
-            <Image src={leonelImage} alt="Nuestros valores" fluid rounded />
+            <Image src={leonelImage} alt="Leonel" fluid rounded />
             <p className="image-caption mt-2">Valores que nos guían</p>
           </div>
         </Col>
 
-        <Col xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
+        <Col
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
+          className="d-flex justify-content-center"
+        >
           <div className="grid-item-image">
-            <Image src="https://placehold.co/400x300/C3F8FF/FFFFFF?text=Visión" alt="Nuestra visión a futuro" fluid rounded />
+            <Image
+              src="https://placehold.co/400x300/C3F8FF/FFFFFF?text=Visión"
+              alt="Nuestra visión a futuro"
+              fluid
+              rounded
+            />
             <p className="image-caption mt-2">Mirando hacia el futuro</p>
           </div>
         </Col>
@@ -54,7 +86,7 @@ const SobreNosotros = () => {
       <Row className="justify-content-center">
         <Col xs={12} className="text-center">
           <Link to="/" className="text-decoration-none">
-            <Button variant="outline-primary" size="lg">
+            <Button variant="outline-success" size="lg">
               Volver al Inicio
             </Button>
           </Link>

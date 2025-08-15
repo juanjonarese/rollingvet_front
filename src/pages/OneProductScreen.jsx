@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import clientAxios from "../helpers/clientAxios";
-import "../css/OneProduct.css";
+import clientAxios from "../helpers/clientAxios"
+import "../css/unProducto.css";
 
 const OneProductScreen = () => {
   const { id } = useParams();
@@ -68,9 +68,9 @@ const OneProductScreen = () => {
 
   return (
     <div className="container">
-      <div className="row py-5">
+      <div className="row py-2">
         <div className="col text-center">
-          <h1 className="fw-bold">Detalle de producto</h1>
+          <h1 className="fw-bold texto-home">Detalle de producto</h1>
         </div>
       </div>
 
@@ -81,9 +81,9 @@ const OneProductScreen = () => {
         <div className="product-info">
           <h2>{product.titulo}</h2>
           <p>{product.descripcion}</p>
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <button className="buy-button" onClick={handleComprar}>
-              🛒 Comprar Ahora
+          <div className="d-flex justify-content-between align-items-center mt-1">
+            <button className="buy-button btn-login" onClick={handleComprar}>
+              Comprar Ahora
             </button>
             <div className="product-price">${product.precio}</div>
           </div>
