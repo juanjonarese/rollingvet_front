@@ -13,6 +13,27 @@ import AdminRoute from "./AdminRoutes.jsx";
 
 import LoginPage from "../pages/LoginPage";
 import SobreNosotros from "../pages/SobreNosotros";
+import CarritoPage from "../pages/CarritoPage";
+
+
+
+const PrincipalRoutes = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/products" element={<ProductsScreen />} />
+        <Route path="/product/:id" element={<OneProductScreen />} />
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/signup" element={<RegisterScreen />} />
+        <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
+        <Route path="/changepass" element={<ChangePassScreen />} />
+        <Route path="/adminusers" element={<AdminUsersScreen />} />
+        <Route path="/aboutuspage" element={<SobreNosotros />} />
+        <Route path="/carritopage" element={<CarritoPage />} />
+      </Routes>
+    </BrowserRouter>
+
 import AdminProductsScreen from "../pages/AdminProductsScreen.jsx";
 import PacientesScreen from "../pages/PacientesScreen.jsx"
 
