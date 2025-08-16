@@ -10,6 +10,7 @@ import AdminUsersScreen from "../pages/AdminUsersScreen";
 import AboutUsPage from "../pages/AboutUsPage";
 import FormularioPlanes from "../components/FormularioPlanes";
 import AdminProductsScreen from "../pages/AdminProductsScreen";
+import TurnosScreen from "../pages/TurnosScreen";
 
 const PrincipalRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const PrincipalRoutes = () => {
         <Route path="/adminusers" element={<AdminUsersScreen />} />
         <Route path="/adminproducts" element={<AdminProductsScreen />} />
         <Route path="/FormularioPlanes" element={<FormularioPlanes />} />
+        <Route path="/turnos" element={<TurnosScreen />} />
         {/* <Route path="/about" element={<AboutScreen />} />
         <Route path="/planes" element={<Planes />} />
         <Route path="*" element={<NotFound />} /> */}
