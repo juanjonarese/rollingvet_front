@@ -17,7 +17,7 @@ const RecoveryPassMailScreen = () => {
         emailUsuario: data.emailUsuario,
       });
 
-      if (respuesta.status === 201 || respuesta.status === 200) {
+      if (respuesta.status === 200) {
         MySwal.fire({
           title: "Correo enviado",
           text: "Revisá tu bandeja para recuperar tu contraseña.",

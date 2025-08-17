@@ -10,7 +10,7 @@ import Error404 from "../pages/error404.jsx";
 import FormularioPlanes from "../components/FormularioPlanes.jsx";
 import FooterApp from "../components/FooterApp.jsx";
 import AdminRoute from "./AdminRoutes.jsx";
-
+import PlanesPage from "../pages/PlanesPage";
 import LoginPage from "../pages/LoginPage";
 import SobreNosotros from "../pages/SobreNosotros";
 import AdminProductsScreen from "../pages/AdminProductsScreen.jsx";
@@ -19,6 +19,7 @@ import PacientesScreen from "../pages/PacientesScreen.jsx"
 const PrincipalRoutes = () => {
   return (
     <Routes>
+      <Route path="/cards" element={<PlanesPage />} />
       <Route path="/" element={<HomeScreen />} />
       <Route path="/products" element={<ProductsScreen />} />
       <Route path="/product/:id" element={<OneProductScreen />} />

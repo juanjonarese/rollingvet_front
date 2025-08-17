@@ -1,8 +1,23 @@
+:root {
+  --primary: #57ad88;
+  --primary-hover: #4a9474;
+  --bg: #ffff;
+  --card-bg: #ffffff;
+  --text: #2c3e50;
+  --success: #16a34a;
+  --error: #dc2626;
+  --border: #e2e8f0;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --radius: 12px;
+  --transition: 0.2s ease-in-out;
+}
+
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
   line-height: 1.45;
+  font-family: 'Arial', sans-serif;
 }
 
 .form-container {
@@ -55,7 +70,7 @@ body {
 .form-input:focus,
 .form-textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 0 0 3px rgba(87, 173, 136, 0.2);
 }
 
 .btn-submit {
@@ -68,7 +83,7 @@ body {
   background: var(--primary);
   color: #fff;
   transition: background var(--transition), transform 0.15s ease;
-  align-self: flex-start;
+  width: 100%;
 }
 
 .btn-submit:hover {
@@ -85,7 +100,8 @@ body {
   padding: 0.6rem 0.85rem;
   border-radius: 5px;
   font-weight: 500;
-  display: inline-block;
+  text-align: center;
+  display: block;
 }
 
 .status-message.success {
