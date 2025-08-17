@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import Card from "../components/Cards";
 import CarouselApp from "../components/CarouselApp";
 import banner from "../assets/banner.jpeg";
+import CardsPlanes from '../components/CardsPlanes';
+import { Container } from 'react-bootstrap';
 
 import "../css/home.css";
 
@@ -85,22 +86,19 @@ const HomeScreen = () => {
       </div>
 
       {/* Cards de planes */}
-      <div className="container py-4">
-        <div className="row justify-content-center">
-          {cards.map((card) => (
-            <div key={card.id} className="col-md-4 mb-3">
-              <Card titulo={card.titulo} descripcion={card.descripcion} />
-            </div>
-          ))}
-        </div>
-      </div>
+    <Container className="my-5">
+      <CardsPlanes />
+    </Container>
       <div className="container-fluid px-0 mb-3 px-5">
         <div className="bg-light text-center">
           <img src={banner} alt="Banner" className="img-fluid w-100" />
         </div>
       </div>
     </>
-  );
-};
+
+)
+}
 
 export default HomeScreen;
+
+
