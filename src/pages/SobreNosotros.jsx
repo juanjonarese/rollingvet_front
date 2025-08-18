@@ -32,7 +32,7 @@ const SobreNosotros = () => {
         >
           <div className="grid-item-image">
             <Image src={juanImage} alt="Juan" fluid rounded />
-            <p className="image-caption mt-2">Juan Narese</p>
+            <p className="d-flex justify-content-center">Juan Narese</p>
           </div>
         </Col>
         <Col
@@ -44,7 +44,7 @@ const SobreNosotros = () => {
         >
           <div className="grid-item-image">
             <Image src={luchoImage} alt="Lucho" fluid rounded />
-            <p className="image-caption mt-2">Lucho Martínez</p>
+            <p className="d-flex justify-content-center">Lucho Martínez</p>
           </div>
         </Col>
         <Col
@@ -56,7 +56,7 @@ const SobreNosotros = () => {
         >
           <div className="grid-item-image">
             <Image src={leonelImage} alt="Leonel" fluid rounded />
-            <p className="image-caption mt-2">Leonel Salvatierra</p>
+            <p className="d-flex justify-content-center">Leonel Salvatierra</p>
           </div>
         </Col>
         <Col
@@ -68,7 +68,7 @@ const SobreNosotros = () => {
         >
           <div className="grid-item-image">
             <Image src={facuImage} alt="facu" fluid rounded />
-            <p className="image-caption mt-2">Facundo Cuellar</p>
+            <p className="d-flex justify-content-center">Facundo Cuellar</p>
           </div>
         </Col>
       </Row>
