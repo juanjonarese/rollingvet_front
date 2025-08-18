@@ -18,7 +18,7 @@ function Error404() {
           <h2 className="display-4 mb-4">Página no encontrada</h2>
 
           <Link to="/" className="text-decoration-none">
-            <Button variant="primary" size="lg">
+            <Button style={{ backgroundColor: "#235850", borderColor: "#235850" }} size="lg">
               Volver al inicio
             </Button>
           </Link>
