@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import juanImage from "../assets/juan.png";
 import luchoImage from "../assets/lucho.png";
 import leonelImage from "../assets/leonel.png";
+import facuImage from "../assets/facu.jpg"
 
 const SobreNosotros = () => {
   return (
@@ -22,7 +23,6 @@ const SobreNosotros = () => {
       </Row>
 
       <Row className="image-grid justify-content-center g-4 mb-5">
-        {/* Juan */}
         <Col
           xs={12}
           sm={6}
@@ -32,11 +32,9 @@ const SobreNosotros = () => {
         >
           <div className="grid-item-image">
             <Image src={juanImage} alt="Juan" fluid rounded />
-            <p className="image-caption mt-2">Nuestro equipo de desarrollo</p>
+            <p className="image-caption mt-2">Juan Narese</p>
           </div>
         </Col>
-
-        {/* Lucho */}
         <Col
           xs={12}
           sm={6}
@@ -46,11 +44,9 @@ const SobreNosotros = () => {
         >
           <div className="grid-item-image">
             <Image src={luchoImage} alt="Lucho" fluid rounded />
-            <p className="image-caption mt-2">Trabajando en nuestra misión</p>
+            <p className="image-caption mt-2">Lucho Martínez</p>
           </div>
         </Col>
-
-        {/* Leonel */}
         <Col
           xs={12}
           sm={6}
@@ -60,10 +56,9 @@ const SobreNosotros = () => {
         >
           <div className="grid-item-image">
             <Image src={leonelImage} alt="Leonel" fluid rounded />
-            <p className="image-caption mt-2">Valores que nos guían</p>
+            <p className="image-caption mt-2">Leonel Salvatierra</p>
           </div>
         </Col>
-
         <Col
           xs={12}
           sm={6}
@@ -72,13 +67,8 @@ const SobreNosotros = () => {
           className="d-flex justify-content-center"
         >
           <div className="grid-item-image">
-            <Image
-              src="https://placehold.co/400x300/C3F8FF/FFFFFF?text=Visión"
-              alt="Nuestra visión a futuro"
-              fluid
-              rounded
-            />
-            <p className="image-caption mt-2">Mirando hacia el futuro</p>
+            <Image src={facuImage} alt="facu" fluid rounded />
+            <p className="image-caption mt-2">Facundo Cuellar</p>
           </div>
         </Col>
       </Row>
