@@ -14,7 +14,8 @@ import PlanesPage from "../pages/PlanesPage";
 import LoginPage from "../pages/LoginPage";
 import SobreNosotros from "../pages/SobreNosotros";
 import AdminProductsScreen from "../pages/AdminProductsScreen.jsx";
-import PacientesScreen from "../pages/PacientesScreen.jsx"
+import PacientesScreen from "../pages/PacientesScreen.jsx";
+import TurnosScreen from "../pages/TurnosScreen.jsx";
 
 const PrincipalRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const PrincipalRoutes = () => {
       <Route path="/products" element={<ProductsScreen />} />
       <Route path="/product/:id" element={<OneProductScreen />} />
       <Route path="/aboutuspage" element={<SobreNosotros />} />
+      <Route path="/turnos" element={<TurnosScreen />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<RegisterScreen />} />
       <Route path="/recoverymail" element={<RecoveryPassMailScreen />} />
