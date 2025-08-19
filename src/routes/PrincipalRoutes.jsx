@@ -9,7 +9,7 @@ import AdminUsersScreen from "../pages/AdminUsersScreen";
 import Error404 from "../pages/error404.jsx";
 import FormularioPlanes from "../components/FormularioPlanes.jsx";
 import FooterApp from "../components/FooterApp.jsx";
-import AdminRoute from "./AdminRoutes.jsx";
+import { AdminRoute, AdminVetRoute } from "./AdminRoutes.jsx";
 import PlanesPage from "../pages/PlanesPage";
 import LoginPage from "../pages/LoginPage";
 import SobreNosotros from "../pages/SobreNosotros";
@@ -32,7 +32,7 @@ const PrincipalRoutes = () => {
       <Route path="/footerapp" element={<FooterApp />} />
       <Route path="/FormularioPlanes" element={<FormularioPlanes />} />
 
-      {/* ✅ Rutas protegidas con wrapper */}
+      {/* Solo para admins */}
       <Route
         path="/admin/adminusers"
         element={
@@ -41,20 +41,22 @@ const PrincipalRoutes = () => {
           </AdminRoute>
         }
       />
+      
+      {/* Para admins y veterinarios */}
       <Route
         path="/admin/adminproducts"
         element={
-          <AdminRoute>
+          <AdminVetRoute>
             <AdminProductsScreen />
-          </AdminRoute>
+          </AdminVetRoute>
         }
       />
       <Route
         path="/admin/pacientes"
         element={
-          <AdminRoute>
+          <AdminVetRoute>
             <PacientesScreen />
-          </AdminRoute>
+          </AdminVetRoute>
         }
       />
     </Routes>

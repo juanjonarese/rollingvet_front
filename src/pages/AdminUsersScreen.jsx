@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import axios from "../helpers/clientAxios";
+import clientAxios from "../helpers/clientAxios";
 
 const AdminUsersScreen = () => {
   const MySwal = withReactContent(Swal);
   const [usuarios, setUsuarios] = useState([]);
-  const [rolesEditados, setRolesEditados] = useState({}); // Guarda los roles cambiados por ID
+  const [rolesEditados, setRolesEditados] = useState({});
 
   const traerUsuarios = async () => {
     try {
-      const respuesta = await axios.get("/usuarios");
+      const respuesta = await clientAxios.get("/usuarios");
       const data = respuesta.data;
       setUsuarios(data.usuarios || []);
     } catch (error) {
@@ -18,7 +18,7 @@ const AdminUsersScreen = () => {
 
       MySwal.fire({
         title: "Error",
-        text: error.response.data.msg || "Ocurrió un error al iniciar sesión",
+        text: error.response?.data?.msg || "Ocurrió un error al traer usuarios",
         icon: "error",
       });
     }
@@ -40,7 +40,7 @@ const AdminUsersScreen = () => {
     if (!nuevoRol) return;
 
     try {
-      const respuesta = await axios.put(`/usuarios/${idUsuario}/rol`, {
+      const respuesta = await clientAxios.put(`/usuarios/${idUsuario}/rol`, {
         rolUsuario: nuevoRol,
       });
 
@@ -52,7 +52,7 @@ const AdminUsersScreen = () => {
         showConfirmButton: false,
       });
 
-      traerUsuarios(); // refresca lista
+      traerUsuarios();
     } catch (error) {
       console.error("Error al actualizar rol", error);
       MySwal.fire({
@@ -63,52 +63,87 @@ const AdminUsersScreen = () => {
     }
   };
 
+  const deleteUser = async (usuario) => {
+    const result = await MySwal.fire({
+      title: `¿Quiere eliminar a: ${usuario.nombreUsuario}?`,
+      showDenyButton: true,
+      confirmButtonText: "Sí",
+      denyButtonText: "No",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await clientAxios.delete(`/usuarios/${usuario._id}`);
+        const newUsers = usuarios.filter((u) => u._id !== usuario._id);
+        setUsuarios(newUsers);
+
+        MySwal.fire("Usuario eliminado", "", "success");
+      } catch (error) {
+        MySwal.fire("Error", "No se pudo eliminar el usuario", "error");
+        console.error(error.response?.data || error.message);
+      }
+    }
+  };
+
   return (
     <div className="container">
-      <h2>Usuarios</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Teléfono</th>
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usuarios.map((usuario) => (
-            <tr key={usuario._id}>
-              <td>{usuario.nombreUsuario}</td>
-              <td>{usuario.telefonoUsuario}</td>
-              <td>{usuario.emailUsuario}</td>
-              <td>
-                <div className="mb-2">
-                  <select
-                    className="form-select form-select-sm"
-                    value={rolesEditados[usuario._id] || usuario.rolUsuario}
-                    onChange={(e) =>
-                      handleRolChange(usuario._id, e.target.value)
-                    }
-                  >
-                    <option value="admin">Admin</option>
-                    <option value="veterinario">Veterinario</option>
-                    <option value="cliente">User</option>
-                  </select>
+      <h2 className="mb-4">Usuarios</h2>
+
+      {usuarios.map((usuario) => (
+        <div key={usuario._id} className="card mb-3">
+          <div className="card-body">
+            <div className="row">
+              
+              {/* Información del usuario */}
+              <div className="col-12 col-md-8">
+                <div className="row">
+                  <div className="col-12 col-sm-6 mb-2">
+                    <strong>Nombre:</strong> {usuario.nombreUsuario}
+                  </div>
+                  <div className="col-12 col-sm-6 mb-2">
+                    <strong>Teléfono:</strong> {usuario.telefonoUsuario}
+                  </div>
+                  <div className="col-12 mb-2">
+                    <strong>Email:</strong> <span className="text-break">{usuario.emailUsuario}</span>
+                  </div>
+                  <div className="col-12 mb-2">
+                    <strong>Rol:</strong> {usuario.rolUsuario}
+                  </div>
                 </div>
-              </td>
-              <td>
-                <button
-                  onClick={() => actualizarRol(usuario._id)}
-                  className="btn btn-primary"
+              </div>
+              
+              {/* Controles */}
+              <div className="col-12 col-md-4">
+                <select
+                  className="form-select form-select-sm mb-2"
+                  value={rolesEditados[usuario._id] || usuario.rolUsuario}
+                  onChange={(e) => handleRolChange(usuario._id, e.target.value)}
                 >
-                  Cambiar Rol
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <option value="cliente">User</option>
+                  <option value="veterinario">Veterinario</option>
+                  <option value="admin">Admin</option>
+                </select>
+
+                <div className="d-flex gap-2">
+                  <button
+                    onClick={() => actualizarRol(usuario._id)}
+                    className="btn btn-primary btn-sm flex-fill"
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    onClick={() => deleteUser(usuario)}
+                    className="btn btn-danger btn-sm flex-fill"
+                  >
+                    <i className="fa fa-trash-o" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

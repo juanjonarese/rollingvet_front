@@ -38,13 +38,13 @@ const NavBarApp = () => {
 
     checkUser();
 
-    // Escuchar cambios manuales al localStorage (por ejemplo, desde otra pestaña o login externo)
+    
     window.addEventListener("storage", checkUser);
 
     return () => {
       window.removeEventListener("storage", checkUser);
     };
-  }, [show]); // ← sin dependencias, se ejecuta una sola vez al montar
+  }, [show]); 
 
   return (
     <>
@@ -110,8 +110,8 @@ const NavBarApp = () => {
                 </NavLink>
               </li>
 
-              {/* Botón de Admin - solo se muestra si el usuario es admin */}
-              {user?.rolUsuario === "admin" && (
+              {/* Botón de Admin - solo se muestra si el usuario es admin o veterinario */}
+              {(user?.rolUsuario === "admin" || user?.rolUsuario === "veterinario") && (
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
@@ -133,11 +133,13 @@ const NavBarApp = () => {
                         Pacientes
                       </Link>
                     </li>
-                    <li>
-                      <Link className="dropdown-item" to="/admin/adminusers">
-                        Usuarios
-                      </Link>
-                    </li>
+                    {user?.rolUsuario === "admin" && (
+                      <li>
+                        <Link className="dropdown-item" to="/admin/adminusers">
+                          Usuarios
+                        </Link>
+                      </li>
+                    )}
                   </ul>
                 </li>
               )}
