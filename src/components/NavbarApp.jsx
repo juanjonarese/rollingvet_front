@@ -100,15 +100,16 @@ const NavBarApp = () => {
               </li>
 
               <li className="nav-item">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
-                  }
-                  to="/turnos"
-                >
-                  Turnos
-                </NavLink>
-              </li>
+  <NavLink
+    className={({ isActive }) =>
+      isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
+    }
+    to={user ? "/turnos" : "/login"}   // ✅ condicional correcto
+  >
+    Turnos
+  </NavLink>
+</li>
+
 
               {/* Botón de Admin - solo se muestra si el usuario es admin o veterinario */}
               {(user?.rolUsuario === "admin" || user?.rolUsuario === "veterinario") && (
