@@ -1,10 +1,9 @@
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import clientAxios from "../helpers/clientAxios";
+import { useNavigate } from "react-router-dom";
 
-("use client");
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -16,11 +15,17 @@ import {
   Alert,
   Badge,
 } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const veterinarios = [
-  { id: "vet1", nombre: "Dr. MarÃ­a GonzÃ¡lez" },
-  { id: "vet2", nombre: "Dr. Carlos RodrÃ­guez" },
+  { id: "vet1", nombre: "Dr. María González" },
+  { id: "vet2", nombre: "Dr. Carlos Rodríguez" },
+];
+
+const especies = [
+  { value: "perro", label: "Perro" },
+  { value: "gato", label: "Gato" },
+  { value: "ave", label: "Ave" },
+  { value: "otros", label: "Otros" },
 ];
 
 const horariosDisponibles = [
@@ -44,42 +49,91 @@ const horariosDisponibles = [
 
 export default function TurnosScreen() {
   const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
+  
   const [turnos, setTurnos] = useState([]);
   const [datosFormulario, setDatosFormulario] = useState({
     detalle: "",
     veterinario: "",
     mascota: "",
+    especie: "",
     fecha: "",
     hora: "",
   });
   const [errores, setErrores] = useState({});
   const [mostrarExito, setMostrarExito] = useState(false);
-  const crearTurno = async (datos) => {
-    try {
-      const respuesta = await clientAxios.post("/usuarios", datos);
-      console.log(respuesta);
-      if (respuesta.status === 201 || respuesta.status === 200) {
-        MySwal.fire({
-          title: respuesta.data.msg,
-          text: "Turno creado con exito",
-          icon: "success",
-        });
-        navigate("/login");
-      } else {
-        MySwal.fire({
-          title: "Error",
-          text: "No se pudo crear el usuario",
-          icon: "error",
-        });
-      }
-    } catch (error) {
-      MySwal.fire({
-        title: "Error",
-        text: error.response?.data?.message || "Error al crear turno",
-        icon: "error",
-      });
+  const [enviando, setEnviando] = useState(false);
+  const [cargandoTurnos, setCargandoTurnos] = useState(false);
+
+  // Cargar turnos existentes al montar el componente
+  useEffect(() => {
+    cargarTurnos();
+  }, []);
+
+  const cargarTurnos = async () => {
+  try {
+    setCargandoTurnos(true);
+    const respuesta = await clientAxios.get("/turnos");
+    setTurnos(respuesta.data);
+  } catch (error) {
+    console.error("Error al cargar turnos:", error);
+    MySwal.fire({
+      title: "Error",
+      text: "No se pudieron cargar los turnos existentes",
+      icon: "warning",
+    });
+  } finally {
+    setCargandoTurnos(false);
+  }
+};
+
+const crearTurno = async (datos) => {
+  try {
+    const datosParaEnviar = {
+      nombreMascota: datos.nombre,   // ⚡ mapear "nombre" a "nombreMascota"
+      detalleCita: datos.detalleCita,
+      fecha: datos.fecha,
+      hora: datos.hora,
+      // veterinario y especie NO van porque tu schema no los acepta
+    };
+
+    console.log("Voy a enviar:", datosParaEnviar);
+
+    const respuesta = await clientAxios.post("/turnos", datosParaEnviar);
+
+    console.log("Llegó la respuesta:", respuesta);
+
+    if (respuesta.status === 201) {
+      MySwal.fire(
+        "Turno creado",
+        "El turno fue registrado con éxito",
+        "success"
+      );
     }
-  };
+
+    // ✅ Esto tiene que estar DENTRO del try, no afuera de la función
+    // Reiniciar formulario
+    setDatosFormulario({
+      detalle: "",
+      veterinario: "",
+      mascota: "",
+      especie: "",
+      fecha: "",
+      hora: "",
+    });
+
+    setMostrarExito(true);
+    setTimeout(() => setMostrarExito(false), 3000);
+
+    // Recargar la lista de turnos
+    await cargarTurnos();
+
+  } catch (error) {
+    console.error("Error creando turno:", error);
+    MySwal.fire("Error", "No se pudo registrar el turno", "error");
+  }
+};
+
 
   const manejarCambioInput = (e) => {
     const { name, value } = e.target;
@@ -88,6 +142,7 @@ export default function TurnosScreen() {
       [name]: value,
     }));
 
+    // Limpiar errores cuando el usuario corrige
     if (errores[name]) {
       setErrores((prev) => ({
         ...prev,
@@ -111,6 +166,10 @@ export default function TurnosScreen() {
       nuevosErrores.mascota = "El nombre de la mascota es obligatorio";
     }
 
+    if (!datosFormulario.especie) {
+      nuevosErrores.especie = "Debe seleccionar la especie";
+    }
+
     if (!datosFormulario.fecha) {
       nuevosErrores.fecha = "La fecha es obligatoria";
     } else {
@@ -132,21 +191,39 @@ export default function TurnosScreen() {
       nuevosErrores.hora = "Debe seleccionar una hora";
     }
 
+    // Verificar disponibilidad del horario
     if (
       datosFormulario.fecha &&
       datosFormulario.hora &&
       datosFormulario.veterinario
     ) {
-      const horarioOcupado = turnos.some(
-        (turno) =>
-          turno.fecha === datosFormulario.fecha &&
+      const fechaSeleccionada = datosFormulario.fecha; // formato: "2025-08-20"
+      
+      const horarioOcupado = turnos.some((turno) => {
+        if (!turno.fecha) return false;
+        
+        let fechaTurno;
+        try {
+          // Convertir la fecha del turno al formato YYYY-MM-DD para comparar
+          const fechaObj = new Date(turno.fecha);
+          if (isNaN(fechaObj.getTime())) return false; // Fecha inválida
+          
+          fechaTurno = fechaObj.toISOString().split('T')[0];
+        } catch (error) {
+          console.warn("Error al procesar fecha del turno:", turno.fecha);
+          return false;
+        }
+        
+        return (
+          fechaTurno === fechaSeleccionada &&
           turno.hora === datosFormulario.hora &&
-          turno.veterinario === datosFormulario.veterinario
-      );
+          (turno.veterinario === datosFormulario.veterinario || !turno.veterinario)
+        );
+      });
 
       if (horarioOcupado) {
         nuevosErrores.hora =
-          "Este horario ya estÃ¡ ocupado para el veterinario seleccionado";
+          "Este horario ya está ocupado para el veterinario seleccionado";
       }
     }
 
@@ -154,46 +231,42 @@ export default function TurnosScreen() {
     return Object.keys(nuevosErrores).length === 0;
   };
 
-  const manejarEnvio = (e) => {
+  const manejarEnvio = async (e) => {
     e.preventDefault();
 
     if (validarFormulario()) {
-      const nuevoTurno = {
-        id: Date.now().toString(),
-        ...datosFormulario,
-        fechaCreacion: new Date(),
+      // Preparar los datos según la estructura que espera tu backend
+      const datosParaEnviar = {
+        nombre: datosFormulario.mascota,                    // mascota -> nombre
+        especie: datosFormulario.especie,                   // especie
+        detalleCita: datosFormulario.detalle,              // detalle -> detalleCita
+        fecha: datosFormulario.fecha + "T00:00:00.000Z",   // fecha en formato ISO
+        hora: datosFormulario.hora,                        // hora
+        veterinario: datosFormulario.veterinario,          // veterinario (si tu backend lo acepta)
       };
 
-      setTurnos((prev) => [...prev, nuevoTurno]);
-      setDatosFormulario({
-        detalle: "",
-        veterinario: "",
-        mascota: "",
-        fecha: "",
-        hora: "",
-      });
-      setMostrarExito(true);
-      setTimeout(() => setMostrarExito(false), 3000);
+      console.log("Datos preparados para enviar:", datosParaEnviar);
+      await crearTurno(datosParaEnviar);
     }
-  };
-
-  const eliminarTurno = (id) => {
-    setTurnos((prev) => prev.filter((turno) => turno.id !== id));
   };
 
   const obtenerNombreVeterinario = (idVet) => {
     return veterinarios.find((vet) => vet.id === idVet)?.nombre || idVet;
   };
 
-  const turnosOrdenados = [...turnos].sort((a, b) => {
-    const fechaA = new Date(`${a.fecha} ${a.hora}`);
-    const fechaB = new Date(`${b.fecha} ${b.hora}`);
-    return fechaA.getTime() - fechaB.getTime();
-  });
+  const obtenerNombreEspecie = (especieValue) => {
+    return especies.find((esp) => esp.value === especieValue)?.label || especieValue;
+  };
 
   const obtenerFechaMinima = () => {
     const hoy = new Date();
     return hoy.toISOString().split("T")[0];
+  };
+
+  const formatearFecha = (fechaISO) => {
+    if (!fechaISO) return "";
+    const fecha = new Date(fechaISO);
+    return fecha.toLocaleDateString("es-ES");
   };
 
   return (
@@ -214,14 +287,14 @@ export default function TurnosScreen() {
               dismissible
               onClose={() => setMostrarExito(false)}
             >
-              Turno agendado exitosamente
+              ✅ Turno agendado exitosamente
             </Alert>
           </Col>
         </Row>
       )}
 
       <Row>
-        <Col lg={5} className="mb-4">
+        <Col lg={6} className="mb-4">
           <Card>
             <Card.Header className="bg-primary text-white">
               <h4 className="mb-0">Agendar Nuevo Turno</h4>
@@ -236,8 +309,9 @@ export default function TurnosScreen() {
                     name="detalle"
                     value={datosFormulario.detalle}
                     onChange={manejarCambioInput}
-                    placeholder="Ej: Consulta general, vacunaciÃ³n, control..."
+                    placeholder="Ej: Consulta general, vacunación, control, revisión..."
                     isInvalid={!!errores.detalle}
+                    disabled={enviando}
                   />
                   <Form.Control.Feedback type="invalid">
                     {errores.detalle}
@@ -251,6 +325,7 @@ export default function TurnosScreen() {
                     value={datosFormulario.veterinario}
                     onChange={manejarCambioInput}
                     isInvalid={!!errores.veterinario}
+                    disabled={enviando}
                   >
                     <option value="">Seleccionar veterinario...</option>
                     {veterinarios.map((vet) => (
@@ -264,20 +339,47 @@ export default function TurnosScreen() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Mascota *</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="mascota"
-                    value={datosFormulario.mascota}
-                    onChange={manejarCambioInput}
-                    placeholder="Nombre de la mascota"
-                    isInvalid={!!errores.mascota}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errores.mascota}
-                  </Form.Control.Feedback>
-                </Form.Group>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Nombre de la Mascota *</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="mascota"
+                        value={datosFormulario.mascota}
+                        onChange={manejarCambioInput}
+                        placeholder="Nombre de la mascota"
+                        isInvalid={!!errores.mascota}
+                        disabled={enviando}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errores.mascota}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Especie *</Form.Label>
+                      <Form.Select
+                        name="especie"
+                        value={datosFormulario.especie}
+                        onChange={manejarCambioInput}
+                        isInvalid={!!errores.especie}
+                        disabled={enviando}
+                      >
+                        <option value="">Seleccionar especie...</option>
+                        {especies.map((especie) => (
+                          <option key={especie.value} value={especie.value}>
+                            {especie.label}
+                          </option>
+                        ))}
+                      </Form.Select>
+                      <Form.Control.Feedback type="invalid">
+                        {errores.especie}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
 
                 <Row>
                   <Col md={6}>
@@ -290,6 +392,7 @@ export default function TurnosScreen() {
                         onChange={manejarCambioInput}
                         min={obtenerFechaMinima()}
                         isInvalid={!!errores.fecha}
+                        disabled={enviando}
                       />
                       <Form.Control.Feedback type="invalid">
                         {errores.fecha}
@@ -307,6 +410,7 @@ export default function TurnosScreen() {
                         value={datosFormulario.hora}
                         onChange={manejarCambioInput}
                         isInvalid={!!errores.hora}
+                        disabled={enviando}
                       >
                         <option value="">Seleccionar hora...</option>
                         {horariosDisponibles.map((hora) => (
@@ -326,8 +430,20 @@ export default function TurnosScreen() {
                 </Row>
 
                 <div className="d-grid">
-                  <Button variant="primary" type="submit" size="lg">
-                    Agendar Turno
+                  <Button 
+                    variant="primary" 
+                    type="submit" 
+                    size="lg"
+                    disabled={enviando}
+                  >
+                    {enviando ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Agendando...
+                      </>
+                    ) : (
+                      "Agendar Turno"
+                    )}
                   </Button>
                 </div>
               </Form>
@@ -335,81 +451,79 @@ export default function TurnosScreen() {
           </Card>
         </Col>
 
-        {/*  <Col lg={7}>
+        <Col lg={6}>
           <Card>
-            <Card.Header className="bg-success text-white d-flex justify-content-between align-items-center">
-              <h4 className="mb-0">ðŸ“‹ Turnos Agendados</h4>
-              <Badge bg="light" text="dark">
-                {turnos.length} turno{turnos.length !== 1 ? "s" : ""}
-              </Badge>
+            <Card.Header className="bg-secondary text-white d-flex justify-content-between align-items-center">
+              <h4 className="mb-0">Turnos Programados</h4>
+              <Button 
+                variant="outline-light" 
+                size="sm" 
+                onClick={cargarTurnos}
+                disabled={cargandoTurnos}
+              >
+                {cargandoTurnos ? (
+                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                ) : (
+                  "🔄"
+                )}
+              </Button>
             </Card.Header>
-            <Card.Body>
-              {turnos.length === 0 ? (
-                <div className="text-center py-4 text-muted">
-                  <h5>No hay turnos agendados</h5>
-                  <p>Agenda el primer turno usando el formulario</p>
+            <Card.Body className="p-0">
+              {cargandoTurnos ? (
+                <div className="text-center p-4">
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Cargando...</span>
+                  </div>
                 </div>
-              ) : (
+              ) : turnos.length > 0 ? (
                 <div className="table-responsive">
-                  <Table striped bordered hover>
-                    <thead className="table-dark">
+                  <Table striped hover className="mb-0">
+                    <thead>
                       <tr>
-                        <th>Fecha/Hora</th>
-                        <th>Veterinario</th>
                         <th>Mascota</th>
-                        <th>Detalle</th>
-                        <th>Acciones</th>
+                        <th>Especie</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {turnosOrdenados.map((turno) => (
-                        <tr key={turno.id}>
+                      {turnos.slice(-10).reverse().map((turno, index) => (
+                        <tr key={turno._id || index}>
                           <td>
-                            <div>
-                              <strong>
-                                {new Date(turno.fecha).toLocaleDateString(
-                                  "es-ES",
-                                  {
-                                    weekday: "short",
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                  }
-                                )}
-                              </strong>
-                            </div>
-                            <small className="text-muted">{turno.hora}</small>
+                            <strong>{turno.nombreMascota}</strong>
+                            <br />
+                            <small className="text-muted">
+                              {turno.detalleCita?.substring(0, 30)}
+                              {turno.detalleCita?.length > 30 ? "..." : ""}
+                            </small>
                           </td>
                           <td>
                             <Badge bg="info">
-                              {obtenerNombreVeterinario(turno.veterinario)}
+                              {obtenerNombreEspecie(turno.especie)}
                             </Badge>
                           </td>
+                          <td>{formatearFecha(turno.fecha)}</td>
                           <td>
-                            <strong>{turno.mascota}</strong>
+                            <Badge bg="primary">{turno.hora}</Badge>
                           </td>
                           <td>
-                            <small>{turno.detalle}</small>
-                          </td>
-                          <td>
-                            <Button
-                              variant="outline-danger"
-                              size="sm"
-                              onClick={() => eliminarTurno(turno.id)}
-                              title="Eliminar turno"
-                            >
-                              ðŸ—‘ï¸
-                            </Button>
+                            <Badge bg="success">Agendado</Badge>
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </Table>
                 </div>
+              ) : (
+                <div className="text-center p-4 text-muted">
+                  <h5>No hay turnos programados</h5>
+                  <p>Los turnos que agregues aparecerán aquí</p>
+                </div>
               )}
             </Card.Body>
           </Card>
-        </Col> */}
+        </Col>
       </Row>
 
       <Row className="mt-4">
@@ -417,14 +531,15 @@ export default function TurnosScreen() {
           <Card className="bg-light">
             <Card.Body>
               <h6 className="text-muted mb-2">
-                â„¹ï¸ InformaciÃ³n importante:
+                ℹ️ Información importante:
               </h6>
               <ul className="mb-0 text-muted small">
                 <li>Los turnos solo se pueden agendar de lunes a viernes</li>
-                <li>Horario de atenciÃ³n: 8:00 AM - 4:00 PM</li>
+                <li>Horario de atención: 8:00 AM - 4:00 PM</li>
                 <li>Turnos cada 30 minutos</li>
                 <li>No se pueden agendar turnos en fechas pasadas</li>
                 <li>Cada veterinario puede atender un paciente por horario</li>
+                <li>Es obligatorio especificar la especie del animal</li>
               </ul>
             </Card.Body>
           </Card>

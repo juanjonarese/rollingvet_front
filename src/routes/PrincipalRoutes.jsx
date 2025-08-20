@@ -44,7 +44,7 @@ const PrincipalRoutes = () => {
         }
       />
       
-      {/* Para admins y veterinarios */}
+      
       <Route
         path="/admin/adminproducts"
         element={
