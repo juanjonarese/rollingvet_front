@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom"; // <-- Importar esto
+import { useLocation } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import clientAxios from "../helpers/clientAxios"; // No uses configHeaders
+import clientAxios from "../helpers/clientAxios";
 
 const ChangePassScreen = () => {
   const location = useLocation();
