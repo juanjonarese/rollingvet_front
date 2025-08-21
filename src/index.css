@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
 
 .montserrat {
   font-family: "Montserrat", sans-serif;
@@ -8,15 +7,21 @@
   font-style: normal;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .navbar-montserrat {
-  font-family: 'Montserrat', sans-serif;
-  color:rgb(35, 88, 80) !important;
+  font-family: "Montserrat", sans-serif;
+  color: rgb(35, 88, 80) !important;
 }
 
 .logo img {
-  height: 60px;       /* Altura deseada para el logo */
-  width: auto;        /* Mantiene la proporción original */
-  padding-top: 5px;   /* Espacio arriba si es necesario */
+  height: 60px;
+  width: auto;
+  padding-top: 5px;
   padding-bottom: 5px;
 }
 .navbar {
@@ -24,23 +29,24 @@
   padding-bottom: 5px !important; /* Reduce espacio vertical del contenedor */
 }
 
-.texto-home{
-  font-family: 'Montserrat', sans-serif;
+.texto-home {
+  font-family: "Montserrat", sans-serif;
   color: rgb(35, 88, 80);
 }
 
-.btn-login{
+.btn-login {
+  background-color: rgb(56, 182, 161);
+  &:hover {
+    background-color: rgb(59, 180, 161);
+  }
+}
 
-    background-color: rgb(56, 182, 161);
-    &:hover {
-   background-color:   rgb(59, 180, 161);
-}}
-
-.enlace{
+.enlace {
   color: rgb(35, 88, 80);
   &:hover {
     color: rgb(54, 134, 122);
-}}
+  }
+}
 .carousel-item {
   position: relative;
 }
@@ -48,22 +54,23 @@
 .carousel-item::after {
   content: "";
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* ajuste opacidad según necesidad */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.278); /* ajuste opacidad según necesidad */
   z-index: 2;
-  
 }
-.botones-carousel{
+.botones-carousel {
   z-index: 999;
 }
 .overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.359);
+  background-color: rgba(0, 0, 0, 0.407);
   z-index: 3;
   display: flex;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -77,39 +84,39 @@
       padding: 0px 5px;
       background-color: rgb(56, 182, 161);
     }
-  }}
+  }
+}
 
-  .full-width {
+.full-width {
   width: 100vw;
   margin: 0;
   padding: 0;
 }
 
-  .emergencia-banner{
-    font-family: 'Montserrat', sans-serif;
-    background-color:rgb(87, 173, 136);
-  }
-
-
-.aboutus-container{
-  font-family: 'Montserrat', sans-serif;
-   color: rgb(35, 88, 80);
+.emergencia-banner {
+  font-family: "Montserrat", sans-serif;
+  background-color: rgb(87, 173, 136);
 }
 
-.image-caption{
-   font-family: 'Montserrat', sans-serif;
+.aboutus-container {
+  font-family: "Montserrat", sans-serif;
+  color: rgb(35, 88, 80);
 }
 
-.productos-titulo{
-   font-family: 'Montserrat', sans-serif;
-   color: white;
-  
-    background-color:rgb(87, 173, 136);
+.image-caption {
+  font-family: "Montserrat", sans-serif;
+}
+
+.productos-titulo {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+
+  background-color: rgb(87, 173, 136);
 }
 
 .card-link {
   text-decoration: none;
 }
-.footer{
-  background-color:rgb(35, 88, 80);
+.footer {
+  background-color: rgb(35, 88, 80);
 }

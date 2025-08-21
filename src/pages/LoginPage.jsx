@@ -58,7 +58,7 @@ const LoginPage = (props) => {
   return (
     <div className="container">
       <div className="row justify-content-center my-4">
-        <div className="col-md-8 col-lg-8">
+        <div className="col-md-4 col-lg-4">
           <div className="login-container">
             <div className="text-center mb-5">
               <h2 className="fw-bold mb-3">¡Bienvenido!</h2>
@@ -121,7 +121,7 @@ const LoginPage = (props) => {
                   style={{ cursor: "pointer" }}
                   to="/recoverymail"
                 >
-                  Recperar
+                  Recuperar
                 </Link>
               </div>
             </form>
