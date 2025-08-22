@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import HomeScreen from "../pages/HomeScreen";
 import RegisterScreen from "../pages/RegisterScreen";
 import RecoveryPassMailScreen from "../pages/RecoveryPassScreen";
@@ -20,6 +21,44 @@ import ProductosPage from "../pages/ProductosPage";
 import CarritoPage from "../pages/CarritoPage";
 
 const PrincipalRoutes = () => {
+  const [carrito, setCarrito] = useState([]);
+
+  const agregarAlCarrito = (producto) => {
+    setCarrito((prev) => {
+      const existe = prev.find((item) => item.id === producto.id);
+      if (existe) {
+        return prev.map((item) =>
+          item.id === producto.id
+            ? { ...item, cantidad: item.cantidad + 1 }
+            : item
+        );
+      }
+      return [...prev, { ...producto, cantidad: 1 }];
+    });
+  };
+
+  const quitarDelCarrito = (id) => {
+    setCarrito((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const sumarCantidad = (id) => {
+    setCarrito((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, cantidad: item.cantidad + 1 } : item
+      )
+    );
+  };
+
+  const restarCantidad = (id) => {
+    setCarrito((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item
+        )
+        .filter((item) => item.cantidad > 0)
+    );
+  };
+
   return (
     <Routes>
       <Route path="/cards" element={<PlanesPage />} />
@@ -35,10 +74,22 @@ const PrincipalRoutes = () => {
       <Route path="/error404" element={<Error404 />} />
       <Route path="/footerapp" element={<FooterApp />} />
       <Route path="/FormularioPlanes" element={<FormularioPlanes />} />
-      <Route path="/productospage" element={<ProductosPage />} />
-      <Route path="/carritopage" element={<CarritoPage />} />
+      <Route
+        path="/productospage"
+        element={<ProductosPage onAgregar={agregarAlCarrito} />}
+      />
+      <Route
+        path="/carritopage"
+        element={
+          <CarritoPage
+            carrito={carrito}
+            onQuitar={quitarDelCarrito}
+            onSumar={sumarCantidad}
+            onRestar={restarCantidad}
+          />
+        }
+      />
 
-      {/* Solo para admins */}
       <Route
         path="/admin/adminusers"
         element={
@@ -47,8 +98,7 @@ const PrincipalRoutes = () => {
           </AdminRoute>
         }
       />
-      
-      
+
       <Route
         path="/admin/adminproducts"
         element={
@@ -65,7 +115,6 @@ const PrincipalRoutes = () => {
           </AdminVetRoute>
         }
       />
-      
     </Routes>
   );
 };
