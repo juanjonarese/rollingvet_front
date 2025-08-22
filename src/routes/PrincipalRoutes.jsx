@@ -16,6 +16,8 @@ import SobreNosotros from "../pages/SobreNosotros";
 import AdminProductsScreen from "../pages/AdminProductsScreen.jsx";
 import PacientesScreen from "../pages/PacientesScreen.jsx";
 import TurnosScreen from "../pages/TurnosScreen.jsx";
+import ProductosPage from "../pages/ProductosPage";
+import CarritoPage from "../pages/CarritoPage";
 
 const PrincipalRoutes = () => {
   return (
@@ -33,6 +35,8 @@ const PrincipalRoutes = () => {
       <Route path="/error404" element={<Error404 />} />
       <Route path="/footerapp" element={<FooterApp />} />
       <Route path="/FormularioPlanes" element={<FormularioPlanes />} />
+      <Route path="/productospage" element={<ProductosPage />} />
+      <Route path="/carritopage" element={<CarritoPage />} />
 
       {/* Solo para admins */}
       <Route
@@ -61,6 +65,7 @@ const PrincipalRoutes = () => {
           </AdminVetRoute>
         }
       />
+      
     </Routes>
   );
 };
