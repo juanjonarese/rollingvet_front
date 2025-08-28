@@ -6,12 +6,8 @@ import {
   Col,
   Offcanvas,
   ListGroup,
-  Stack,
+  Badge,
 } from "react-bootstrap";
-// import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-
-// 🔑 Reemplaza con tu Public Key de MercadoPago
-// initMercadoPago("TU_PUBLIC_KEY_AQUI");
 
 const productosMock = [
   { id: 1, title: "Alimento Balanceado Perro", price: 3500, img: "../public/AlimentoBalanceado.png" },
@@ -48,6 +44,16 @@ const ProductosPage = () => {
   };
 
   const quitarDelCarrito = (id) => {
+    setCarrito((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item
+        )
+        .filter((item) => item.cantidad > 0)
+    );
+  };
+
+  const eliminarProducto = (id) => {
     setCarrito((prev) => prev.filter((item) => item.id !== id));
   };
 
@@ -56,7 +62,7 @@ const ProductosPage = () => {
       const response = await fetch("https://api.mercadopago.com/checkout/preferences", {
         method: "POST",
         headers: {
-          "Authorization": "Bearer TU_ACCESS_TOKEN_AQUI", // ⚠️ mover al backend en producción
+          "Authorization": "Bearer TU_ACCESS_TOKEN_AQUI",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -76,76 +82,45 @@ const ProductosPage = () => {
   };
 
   return (
-    <div
-      className="container mt-4"
-      style={{
-        "--primary": "#57ad88",
-        "--primary-hover": "#4a9474",
-        "--bg": "#fff",
-        "--card-bg": "#ffffff",
-        "--text": "#2c3e50",
-        "--success": "#16a34a",
-        "--error": "#dc2626",
-        "--border": "#e2e8f0",
-        "--shadow": "0 4px 15px rgba(0, 0, 0, 0.08)",
-        "--radius": "12px",
-        "--transition": "0.2s ease-in-out",
-      }}
-    >
+    <div className="container mt-4">
+      {/* Encabezado con botón carrito */}
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 style={{ color: "var(--text)" }}>🐾 Productos de Veterinaria</h2>
+        <h2 style={{ color: "#235850", fontWeight: "700" }}>🐾 Productos de Veterinaria</h2>
         <Button
-          style={{
-            backgroundColor: "var(--primary)",
-            border: "none",
-            transition: "var(--transition)",
-          }}
+          style={{ backgroundColor: "#57ad88", border: "none", position: "relative" }}
           onClick={() => setMostrarCarrito(true)}
-          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "var(--primary-hover)")}
-          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "var(--primary)")}
         >
-          🛒 Ver Carrito ({carrito.reduce((acc, item) => acc + item.cantidad, 0)})
+          🛒 Carrito{" "}
+          <Badge
+            bg="danger"
+            pill
+            style={{ position: "absolute", top: "-5px", right: "-10px" }}
+          >
+            {carrito.reduce((acc, item) => acc + item.cantidad, 0)}
+          </Badge>
         </Button>
       </div>
 
+      {/* Cards de productos */}
       <Row>
         {productosMock.map((producto) => (
           <Col key={producto.id} md={4} className="mb-4">
-            <Card
-              className="h-100"
-              style={{
-                border: "1px solid var(--border)",
-                borderRadius: "var(--radius)",
-                boxShadow: "var(--shadow)",
-                transition: "transform 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-5px)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
-            >
+            <Card className="h-100 shadow-sm border-0" style={{ borderRadius: "15px" }}>
               <Card.Img
                 variant="top"
                 src={producto.img}
-                style={{
-                  height: "200px",
-                  objectFit: "contain",
-                  padding: "10px",
-                }}
+                style={{ height: "200px", objectFit: "contain", padding: "10px" }}
               />
               <Card.Body className="d-flex flex-column justify-content-between">
-                <Card.Title style={{ color: "var(--text)" }}>
+                <Card.Title style={{ color: "#235850", fontWeight: "600" }}>
                   {producto.title}
                 </Card.Title>
-                <Card.Text style={{ fontWeight: "500", color: "var(--primary)" }}>
+                <Card.Text style={{ fontWeight: "500", color: "#347e71" }}>
                   Precio: ${producto.price}
                 </Card.Text>
                 <Button
-                  style={{
-                    backgroundColor: "var(--primary)",
-                    border: "none",
-                  }}
+                  style={{ backgroundColor: "#57ad88", border: "none" }}
                   onClick={() => agregarAlCarrito(producto)}
-                  onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "var(--primary-hover)")}
-                  onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "var(--primary)")}
                 >
                   Agregar al carrito
                 </Button>
@@ -155,14 +130,16 @@ const ProductosPage = () => {
         ))}
       </Row>
 
-      {/* 🔹 Offcanvas Carrito */}
+      {/* Offcanvas Carrito */}
       <Offcanvas show={mostrarCarrito} onHide={() => setMostrarCarrito(false)} placement="end">
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Carrito de Compras</Offcanvas.Title>
+          <Offcanvas.Title style={{ color: "#235850", fontWeight: "700" }}>
+            🛒 Carrito de Compras
+          </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           {carrito.length === 0 ? (
-            <p>No hay productos en el carrito.</p>
+            <p style={{ color: "#347e71" }}>No hay productos en el carrito.</p>
           ) : (
             <>
               <ListGroup variant="flush">
@@ -172,39 +149,53 @@ const ProductosPage = () => {
                     className="d-flex justify-content-between align-items-center"
                   >
                     <div>
-                      <strong>{item.title}</strong>
-                      <p className="mb-1">Cantidad: {item.cantidad}</p>
-                      <p className="mb-0">Precio: ${item.price}</p>
+                      <strong style={{ color: "#235850" }}>{item.title}</strong>
+                      <p className="mb-1" style={{ color: "#347e71" }}>
+                        Cantidad: {item.cantidad}
+                      </p>
+                      <p className="mb-0" style={{ color: "#4caf8f", fontWeight: "600" }}>
+                        Precio: ${item.price}
+                      </p>
                     </div>
-                    <Button
-                      size="sm"
-                      style={{ backgroundColor: "var(--error)", border: "none" }}
-                      onClick={() => quitarDelCarrito(item.id)}
-                    >
-                      Quitar
-                    </Button>
+                    <div className="d-flex gap-2">
+                      <Button
+                        size="sm"
+                        style={{ backgroundColor: "#57ad88", border: "none" }}
+                        onClick={() => agregarAlCarrito(item)}
+                      >
+                        ➕
+                      </Button>
+                      <Button
+                        size="sm"
+                        style={{ backgroundColor: "#ffc107", border: "none", color: "#235850" }}
+                        onClick={() => quitarDelCarrito(item.id)}
+                      >
+                        ➖
+                      </Button>
+                      <Button
+                        size="sm"
+                        style={{ backgroundColor: "#d9534f", border: "none" }}
+                        onClick={() => eliminarProducto(item.id)}
+                      >
+                        🗑
+                      </Button>
+                    </div>
                   </ListGroup.Item>
                 ))}
               </ListGroup>
 
               <div className="mt-3 text-end">
-                <h5>
+                <h5 style={{ color: "#57ad88" }}>
                   Total: ${carrito.reduce((acc, item) => acc + item.price * item.cantidad, 0)}
                 </h5>
                 <Button
-                  style={{ backgroundColor: "var(--success)", border: "none" }}
                   className="mt-2 w-100"
+                  style={{ backgroundColor: "#57ad88", border: "none" }}
                   onClick={crearPreferencia}
                 >
                   Proceder a Pagar
                 </Button>
               </div>
-
-              {preferenceId && (
-                <div className="mt-3">
-                  {/* <Wallet initialization={{ preferenceId }} /> */}
-                </div>
-              )}
             </>
           )}
         </Offcanvas.Body>
