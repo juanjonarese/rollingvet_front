@@ -98,6 +98,16 @@ const NavBarApp = () => {
                   Productos
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link fw-bold nav-rolling" : "nav-link"
+                  }
+                  to="/productospage"
+                >
+                  Nuestra Tienda
+                </NavLink>
+              </li>
 
               <li className="nav-item">
   <NavLink
