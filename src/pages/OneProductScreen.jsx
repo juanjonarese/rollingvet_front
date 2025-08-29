@@ -30,32 +30,65 @@ const OneProductScreen = () => {
     localStorage.setItem("carrito", JSON.stringify(carrito));
   }, [carrito]);
 
-  const agregarAlCarrito = (producto) => {
-    setCarrito((prev) => {
-      const existe = prev.find((item) => item.id === producto.id);
-      if (existe) {
-        return prev.map((item) =>
-          item.id === producto.id
-            ? { ...item, cantidad: item.cantidad + 1 }
-            : item
-        );
-      }
-      return [...prev, { ...producto, cantidad: 1 }];
-    });
+  const agregarAlCarrito = async (producto) => {
+    try {
+      // Actualizar en la base de datos
+      await clientAxios.post('/carrito/agregar', {
+        productoId: producto.id,
+        cantidad: 1
+      });
+      
+      // Actualizar el estado local
+      setCarrito((prev) => {
+        const existe = prev.find((item) => item.id === producto.id);
+        if (existe) {
+          return prev.map((item) =>
+            item.id === producto.id
+              ? { ...item, cantidad: item.cantidad + 1 }
+              : item
+          );
+        }
+        return [...prev, { ...producto, cantidad: 1 }];
+      });
+    } catch (error) {
+      console.error("Error al agregar producto al carrito:", error);
+      alert("Error al agregar el producto al carrito");
+    }
   };
 
-  const quitarDelCarrito = (id) => {
-    setCarrito((prev) =>
-      prev
-        .map((item) =>
-          item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item
-        )
-        .filter((item) => item.cantidad > 0)
-    );
+  const quitarDelCarrito = async (id) => {
+    try {
+      // Actualizar en la base de datos
+      await clientAxios.put('/carrito/quitar', {
+        productoId: id,
+        cantidad: 1
+      });
+      
+      // Actualizar el estado local
+      setCarrito((prev) =>
+        prev
+          .map((item) =>
+            item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item
+          )
+          .filter((item) => item.cantidad > 0)
+      );
+    } catch (error) {
+      console.error("Error al quitar producto del carrito:", error);
+      alert("Error al quitar el producto del carrito");
+    }
   };
 
-  const eliminarProducto = (id) => {
-    setCarrito((prev) => prev.filter((item) => item.id !== id));
+  const eliminarProducto = async (id) => {
+    try {
+      // Eliminar de la base de datos
+      await clientAxios.delete(`/carrito/eliminar/${id}`);
+      
+      // Actualizar el estado local
+      setCarrito((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Error al eliminar producto del carrito:", error);
+      alert("Error al eliminar el producto del carrito");
+    }
   };
 
   const crearPreferencia = async () => {
@@ -87,6 +120,7 @@ const OneProductScreen = () => {
   const handleComprar = () => {
     agregarAlCarrito(product);
     setMostrarCarrito(true);
+    alert(`¡Producto "${product.titulo}" agregado al carrito!`);
   };
 
   if (loading) {
@@ -136,14 +170,11 @@ const OneProductScreen = () => {
           <div className="d-flex justify-content-between align-items-center mt-1">
             {product && (
               <div className="d-flex gap-2">
-                <button
-                  className="buy-button btn-login"
-                  onClick={handleComprar}
-                >
+                <button className="buy-button btn-login" onClick={handleComprar}>
                   Comprar Ahora
                 </button>
-                <button
-                  className="btn btn-outline-success"
+                <button 
+                  className="btn btn-outline-success" 
                   onClick={() => setMostrarCarrito(true)}
                 >
                   Ver Carrito ({carrito.length})
@@ -176,9 +207,7 @@ const OneProductScreen = () => {
                     className="d-flex justify-content-between align-items-center"
                   >
                     <div>
-                      <strong style={{ color: "#235850" }}>
-                        {item.titulo}
-                      </strong>
+                      <strong style={{ color: "#235850" }}>{item.titulo}</strong>
                       <p className="mb-1" style={{ color: "#347e71" }}>
                         Cantidad: {item.cantidad}
                       </p>
