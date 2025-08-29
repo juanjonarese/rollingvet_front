@@ -1,13 +1,71 @@
 import React, { useEffect, useState } from "react";
+import {
+  Card,
+  Button,
+  Row,
+  Col,
+  Offcanvas,
+  ListGroup,
+  Badge,
+} from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import clientAxios from "../helpers/clientAxios"
+import clientAxios from "../helpers/clientAxios";
 import "../css/unProducto.css";
 
 const OneProductScreen = () => {
+  const [mostrarCarrito, setMostrarCarrito] = useState(false);
+  const [preferenceId, setPreferenceId] = useState(null);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [carrito, setCarrito] = useState(() => {
+    const guardado = localStorage.getItem("carrito");
+    return guardado ? JSON.parse(guardado) : [];
+  });
+
+  // Sincronizar carrito con localStorage
+  useEffect(() => {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }, [carrito]);
+
+  const agregarAlCarrito = (producto) => {
+    setCarrito((prev) => {
+      const existe = prev.find((item) => item.id === producto.id);
+      if (existe) {
+        return prev.map((item) =>
+          item.id === producto.id
+            ? { ...item, cantidad: item.cantidad + 1 }
+            : item
+        );
+      }
+      return [...prev, { ...producto, cantidad: 1 }];
+    });
+  };
+
+  const quitarDelCarrito = (id) => {
+    setCarrito((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item
+        )
+        .filter((item) => item.cantidad > 0)
+    );
+  };
+
+  const eliminarProducto = (id) => {
+    setCarrito((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const crearPreferencia = async () => {
+    try {
+      const response = await clientAxios.get(`/productos/${id}`);
+      // Aquí puedes manejar la respuesta si es necesario
+    } catch (error) {
+      console.error("Error al crear la preferencia:", error);
+    }
+  };
 
   useEffect(() => {
     const obtenerProducto = async () => {
@@ -23,18 +81,12 @@ const OneProductScreen = () => {
         setLoading(false);
       }
     };
-
     obtenerProducto();
   }, [id]);
 
-  const handleComprar = async () => {
-    try {
-      console.log("Comprando producto:", product);
-      alert(`¡Producto "${product.titulo}" agregado al carrito!`);
-    } catch (error) {
-      console.error("Error al comprar:", error);
-      alert("Error al procesar la compra");
-    }
+  const handleComprar = () => {
+    agregarAlCarrito(product);
+    setMostrarCarrito(true);
   };
 
   if (loading) {
@@ -82,13 +134,112 @@ const OneProductScreen = () => {
           <h2>{product.titulo}</h2>
           <p>{product.descripcion}</p>
           <div className="d-flex justify-content-between align-items-center mt-1">
-            <button className="buy-button btn-login" onClick={handleComprar}>
-              Comprar Ahora
-            </button>
+            {product && (
+              <div className="d-flex gap-2">
+                <button
+                  className="buy-button btn-login"
+                  onClick={handleComprar}
+                >
+                  Comprar Ahora
+                </button>
+                <button
+                  className="btn btn-outline-success"
+                  onClick={() => setMostrarCarrito(true)}
+                >
+                  Ver Carrito ({carrito.length})
+                </button>
+              </div>
+            )}
             <div className="product-price">${product.precio}</div>
           </div>
         </div>
       </div>
+      <Offcanvas
+        show={mostrarCarrito}
+        onHide={() => setMostrarCarrito(false)}
+        placement="end"
+      >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title style={{ color: "#235850", fontWeight: "700" }}>
+            🛒 Carrito de Compras
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {carrito.length === 0 ? (
+            <p style={{ color: "#347e71" }}>No hay productos en el carrito.</p>
+          ) : (
+            <>
+              <ListGroup variant="flush">
+                {carrito.map((item) => (
+                  <ListGroup.Item
+                    key={item.id}
+                    className="d-flex justify-content-between align-items-center"
+                  >
+                    <div>
+                      <strong style={{ color: "#235850" }}>
+                        {item.titulo}
+                      </strong>
+                      <p className="mb-1" style={{ color: "#347e71" }}>
+                        Cantidad: {item.cantidad}
+                      </p>
+                      <p
+                        className="mb-0"
+                        style={{ color: "#4caf8f", fontWeight: "600" }}
+                      >
+                        Precio: ${item.precio}
+                      </p>
+                    </div>
+                    <div className="d-flex gap-2">
+                      <Button
+                        size="sm"
+                        style={{ backgroundColor: "#57ad88", border: "none" }}
+                        onClick={() => agregarAlCarrito(item)}
+                      >
+                        ➕
+                      </Button>
+                      <Button
+                        size="sm"
+                        style={{
+                          backgroundColor: "#ffc107",
+                          border: "none",
+                          color: "#235850",
+                        }}
+                        onClick={() => quitarDelCarrito(item.id)}
+                      >
+                        ➖
+                      </Button>
+                      <Button
+                        size="sm"
+                        style={{ backgroundColor: "#d9534f", border: "none" }}
+                        onClick={() => eliminarProducto(item.id)}
+                      >
+                        🗑
+                      </Button>
+                    </div>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+
+              <div className="mt-3 text-end">
+                <h5 style={{ color: "#57ad88" }}>
+                  Total: $
+                  {carrito.reduce(
+                    (acc, item) => acc + item.precio * item.cantidad,
+                    0
+                  )}
+                </h5>
+                <Button
+                  className="mt-2 w-100"
+                  style={{ backgroundColor: "#57ad88", border: "none" }}
+                  onClick={crearPreferencia}
+                >
+                  Proceder a Pagar
+                </Button>
+              </div>
+            </>
+          )}
+        </Offcanvas.Body>
+      </Offcanvas>
     </div>
   );
 };
