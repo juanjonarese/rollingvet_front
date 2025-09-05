@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import clientAxios from "../helpers/clientAxios";
 import CardFichaApp from "../components/CardFichaApp";
-// import FichasCRUD from "../components/FichasCRUD"
+import FormFichasCRUD from "../components/FormFichasCRUD"
 const PacientesScreen = () => {
   const [fichas, setFichas] = useState([]);
 
@@ -19,9 +19,20 @@ const PacientesScreen = () => {
     traerFichas();
   }, []);
 
+    const addFicha = async (nuevaFicha) => {
+    try {
+      const response = await clientAxios.post("/fichas", nuevaFicha);
+      console.log("Ficha guardada:", response.data);
+
+      setFichas([...fichas, response.data]);
+    } catch (error) {
+      console.error("Error al agregar ficha:", error);
+    }
+  }
+
   return (
     <>
-        {/* <FichasCRUD/> */}
+    <FormFichasCRUD addFicha={addFicha} />
     <div className="container my-4">
       <div className="row">
         {fichas.length === 0 ? (

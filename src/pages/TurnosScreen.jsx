@@ -16,11 +16,6 @@ import {
   Badge,
 } from "react-bootstrap";
 
-const veterinarios = [
-  { id: "vet1", nombre: "Dr. María González" },
-  { id: "vet2", nombre: "Dr. Carlos Rodríguez" },
-];
-
 const especies = [
   { value: "perro", label: "Perro" },
   { value: "gato", label: "Gato" },
@@ -50,6 +45,22 @@ const horariosDisponibles = [
 export default function TurnosScreen() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
+
+  const [veterinarios, setVeterinarios] = useState([]);
+
+useEffect(() => {
+    const traerVeterinarios = async () => {
+      try {
+        const { data } = await clientAxios.get("/usuarios");
+        const vets = data.usuarios.filter((u) => u.rolUsuario === "veterinario");
+        setVeterinarios(vets);
+      } catch (error) {
+        console.error("Error al cargar veterinarios", error);
+      }
+    };
+
+    traerVeterinarios();
+  }, []);
   
   const [turnos, setTurnos] = useState([]);
   const [datosFormulario, setDatosFormulario] = useState({
@@ -94,6 +105,7 @@ const crearTurno = async (datos) => {
       detalleCita: datos.detalleCita,
       fecha: datos.fecha,
       hora: datos.hora,
+      veterinarioConsulta: datos.veterinario,
       // veterinario y especie NO van porque tu schema no los acepta
     };
 
@@ -217,7 +229,9 @@ const crearTurno = async (datos) => {
         return (
           fechaTurno === fechaSeleccionada &&
           turno.hora === datosFormulario.hora &&
-          (turno.veterinario === datosFormulario.veterinario || !turno.veterinario)
+          ((turno.veterinarioConsulta &&
+     turno.veterinarioConsulta._id === datosFormulario.veterinario) ||
+    !turno.veterinarioConsulta)
         );
       });
 
@@ -329,8 +343,8 @@ const crearTurno = async (datos) => {
                   >
                     <option value="">Seleccionar veterinario...</option>
                     {veterinarios.map((vet) => (
-                      <option key={vet.id} value={vet.id}>
-                        {vet.nombre}
+                      <option key={vet._id} value={vet._id}>
+                        {vet.nombreUsuario}
                       </option>
                     ))}
                   </Form.Select>
@@ -484,6 +498,7 @@ const crearTurno = async (datos) => {
                         <th>Especie</th>
                         <th>Fecha</th>
                         <th>Hora</th>
+                        <th>Veterinario</th>
                         <th>Estado</th>
                       </tr>
                     </thead>
@@ -506,6 +521,11 @@ const crearTurno = async (datos) => {
                           <td>{formatearFecha(turno.fecha)}</td>
                           <td>
                             <Badge bg="primary">{turno.hora}</Badge>
+                          </td>
+                          <td>
+                            {turno.veterinarioConsulta 
+                            ? `${turno.veterinarioConsulta.nombreUsuario}`
+                            : "Sin asignar"}
                           </td>
                           <td>
                             <Badge bg="success">Agendado</Badge>
