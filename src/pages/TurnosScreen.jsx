@@ -102,6 +102,7 @@ const crearTurno = async (datos) => {
   try {
     const datosParaEnviar = {
       nombreMascota: datos.nombre,   // ⚡ mapear "nombre" a "nombreMascota"
+      especie: datos.especie,
       detalleCita: datos.detalleCita,
       fecha: datos.fecha,
       hora: datos.hora,
@@ -114,8 +115,25 @@ const crearTurno = async (datos) => {
     const respuesta = await clientAxios.post("/turnos", datosParaEnviar);
 
     console.log("Llegó la respuesta:", respuesta);
-
+    
     if (respuesta.status === 201) {
+      const turnoCreado = respuesta.data;
+
+      const datosFicha = {
+        nombreUsuario: "Anónimo",
+        telefonoUsuario: "0000000000",
+        emailUsuario: "anonimo@example.com",
+
+        nombreMascota: datos.nombre,
+        especieMascota: datos.especie,
+        motivoConsulta: datos.detalleCita,
+        fechaConsulta: datos.fecha,
+        horaConsulta: datos.hora,
+        veterinarioConsulta: datos.veterinario,
+      };
+
+      await clientAxios.post("/fichas", datosFicha);
+
       MySwal.fire(
         "Turno creado",
         "El turno fue registrado con éxito",
@@ -262,10 +280,6 @@ const crearTurno = async (datos) => {
       console.log("Datos preparados para enviar:", datosParaEnviar);
       await crearTurno(datosParaEnviar);
     }
-  };
-
-  const obtenerNombreVeterinario = (idVet) => {
-    return veterinarios.find((vet) => vet.id === idVet)?.nombre || idVet;
   };
 
   const obtenerNombreEspecie = (especieValue) => {
