@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import clientAxios from "../helpers/clientAxios";
+import getDatosToken from "../helpers/jwtDecode";
 import { useNavigate } from "react-router-dom";
 
 import { useState, useEffect } from "react";
@@ -47,6 +48,7 @@ export default function TurnosScreen() {
   const navigate = useNavigate();
 
   const [veterinarios, setVeterinarios] = useState([]);
+  const [loggedUser, setLoggedUser] = useState(null);
 
 useEffect(() => {
     const traerVeterinarios = async () => {
@@ -62,6 +64,24 @@ useEffect(() => {
     traerVeterinarios();
   }, []);
   
+  useEffect(() => {
+    const getUsuarioActual = async () => {
+      const datosToken = getDatosToken();
+      if (!datosToken) return null;
+      try {
+        const respuesta = await clientAxios.get(`/usuarios/${datosToken.idUsuario}`)
+        const loggedUser = respuesta.data.usuario;
+        // console.log("Usuario actual:", loggedUser.nombreUsuario, loggedUser.emailUsuario, loggedUser.telefonoUsuario);
+        setLoggedUser(loggedUser);
+      } catch (error) {
+        console.error("Error el obtener datos del usuario actual", error)
+        return null
+      }
+    }
+    getUsuarioActual();
+  }, []);
+
+
   const [turnos, setTurnos] = useState([]);
   const [datosFormulario, setDatosFormulario] = useState({
     detalle: "",
@@ -101,6 +121,7 @@ useEffect(() => {
 const crearTurno = async (datos) => {
   try {
     const datosParaEnviar = {
+      
       nombreMascota: datos.nombre,   // ⚡ mapear "nombre" a "nombreMascota"
       especie: datos.especie,
       detalleCita: datos.detalleCita,
@@ -120,9 +141,9 @@ const crearTurno = async (datos) => {
       const turnoCreado = respuesta.data;
 
       const datosFicha = {
-        nombreUsuario: "Anónimo",
-        telefonoUsuario: "0000000000",
-        emailUsuario: "anonimo@example.com",
+        nombreUsuario: loggedUser.nombreUsuario,
+        telefonoUsuario: loggedUser.telefonoUsuario,
+        emailUsuario: loggedUser.emailUsuario,
 
         nombreMascota: datos.nombre,
         especieMascota: datos.especie,

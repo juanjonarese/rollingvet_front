@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import clientAxios from "../helpers/clientAxios";
+
 
 const CardFichaApp = ({ ficha }) => {
   const [nombre, setNombre] = useState("");
@@ -12,8 +14,9 @@ const CardFichaApp = ({ ficha }) => {
   const [motivo, setMotivo] = useState("");
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
-  const [vet, setVet] = useState("");
+  const [vet, setVet] = useState();
   const [detalle, setDetalle] = useState("");
+  const [vetNombre, setVetNombre] = useState("");
 
   useEffect(() => {
     if (ficha) {
@@ -33,8 +36,24 @@ const CardFichaApp = ({ ficha }) => {
     }
   }, [ficha]);
 
+  useEffect(() => {
+    const vetName = async () => {
+      if (vet) {
+        try {
+          const respuesta = await clientAxios.get(`/usuarios/${vet}`);
+          const nombre = respuesta.data.usuario.nombreUsuario
+          setVetNombre(nombre || vet);
+        } catch (error) {
+          setVetNombre("Veterinario desconocido");
+        }
+      }
+    };
+    vetName();
+  }, [vet]);
+  
+  
   return (
-    <div className="col-md-6 my-4">
+    <div className="col">
       <div className="card shadow">
         <div className="card-body">
           <h5 className="card-title fw-bold mb-3">Ficha de Consulta</h5>
@@ -55,7 +74,7 @@ const CardFichaApp = ({ ficha }) => {
           <p className="mb-1"><strong>Fecha:</strong> {fecha}</p>
           <p className="mb-3"><strong>Hora:</strong> {hora}</p>
 
-          <p className="mb-1"><strong>Veterinario:</strong> {vet}</p>
+          <p className="mb-1"><strong>Veterinario:</strong> {vetNombre}</p>
 
           <p className="mt-3"><strong>Detalles de la consulta:</strong> {detalle}</p>
         </div>
